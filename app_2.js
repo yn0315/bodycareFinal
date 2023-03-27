@@ -656,103 +656,103 @@ app.post('/searchRec', (req,res) => {
 // });
 */
 
-const Host = "192.168.4.1";
-const Port = 80;
-/////////////////////////////////////////////////////net.Socket();
+// const Host = "192.168.4.1";
+// const Port = 80;
+// /////////////////////////////////////////////////////net.Socket();
 
-const client = new net.Socket();
-client.connect(Port, Host, function()
-{
+// const client = new net.Socket();
+// client.connect(Port, Host, function()
+// {
 
-    console.log('Connected to ESP32-CAM');
-    client.write("hello server!");
-    // client.write('GET /stream HTTP/1.1\r\n');
-    // client.write(`Host: 192.168.4.1:81\r\n`);
-    // client.write('Connection: keep-alive\r\n');
-    // client.write('Cache-Control: no-cache\r\n');
-    // client.write('User-Agent: Mozilla/5.0\r\n');
-    // client.write('Accept: */*\r\n\r\n');
+//     console.log('Connected to ESP32-CAM');
+//     client.write("hello server!");
+//     // client.write('GET /stream HTTP/1.1\r\n');
+//     // client.write(`Host: 192.168.4.1:81\r\n`);
+//     // client.write('Connection: keep-alive\r\n');
+//     // client.write('Cache-Control: no-cache\r\n');
+//     // client.write('User-Agent: Mozilla/5.0\r\n');
+//     // client.write('Accept: */*\r\n\r\n');
   
-});
+// });
 
-client.on('error', function(err)
-{
-    if(err.code === 'ECONNRESET')
-    {
-        console.log("연결 에러 재시도 ");
-        io.emit("esp_err", "err");
-        setTimeout(function()
-        {
-            client.connect(Port, Host, function()
-            {
-                console.log('ESP32CAM 재연결 성공');
-                client.write("hello server!");
-            })
-        })
-    }
-});
+// client.on('error', function(err)
+// {
+//     if(err.code === 'ECONNRESET')
+//     {
+//         console.log("연결 에러 재시도 ");
+//         io.emit("esp_err", "err");
+//         setTimeout(function()
+//         {
+//             client.connect(Port, Host, function()
+//             {
+//                 console.log('ESP32CAM 재연결 성공');
+//                 client.write("hello server!");
+//             })
+//         })
+//     }
+// });
 
-// ESP32-CAM에서 데이터를 수신합니다.
+// // ESP32-CAM에서 데이터를 수신합니다.
 
-client.on('data', function (data)
-{
+// client.on('data', function (data)
+// {
     
-    let msg = data.toString('utf-8');
-    console.log(msg);
-    // data_buf = Buffer.concat([data_buf, data]);
-    // const marker = Buffer.from('\r\n--frame\r\n');
-    // const markerIndex = data_buf.indexOf(marker);
-    // if(markerIndex != -1)
-    // {
-    //     const img_buf = data_buf.slice(0, markerIndex);
-    //     const imgdata = img_buf.toString('base64');
-    //     frame = imgdata;
-    //     console.log(frame);
-    //     const decode_buf = Buffer.from(imgdata, 'base64');
+//     let msg = data.toString('utf-8');
+//     console.log(msg);
+//     // data_buf = Buffer.concat([data_buf, data]);
+//     // const marker = Buffer.from('\r\n--frame\r\n');
+//     // const markerIndex = data_buf.indexOf(marker);
+//     // if(markerIndex != -1)
+//     // {
+//     //     const img_buf = data_buf.slice(0, markerIndex);
+//     //     const imgdata = img_buf.toString('base64');
+//     //     frame = imgdata;
+//     //     console.log(frame);
+//     //     const decode_buf = Buffer.from(imgdata, 'base64');
 
 
 
-    //     data_buf = data_buf.slice(markerIndex + marker.length);
-    // }
-    if(msg == "green")
-    {
-        console.log('받은 데이터는 : ', msg);
-        let ok = "light on";
-        io.emit("light_on", ok);
-    }
-    if(msg.includes('hello'))
-    {
-        io.emit("hello_server", "esp_connect");
-    }
+//     //     data_buf = data_buf.slice(markerIndex + marker.length);
+//     // }
+//     if(msg == "green")
+//     {
+//         console.log('받은 데이터는 : ', msg);
+//         let ok = "light on";
+//         io.emit("light_on", ok);
+//     }
+//     if(msg.includes('hello'))
+//     {
+//         io.emit("hello_server", "esp_connect");
+//     }
 
 
-});
+// });
 
 
-client.on('close', function(err)
-{
-    console.log("Close ESP32-CAM");
-    console.log(err);
+// client.on('close', function(err)
+// {
+//     console.log("Close ESP32-CAM");
+//     console.log(err);
     
-    console.log('재연결 시도');
-    io.emit("esp_err", "close");
+//     console.log('재연결 시도');
+//     io.emit("esp_err", "close");
 
-    setTimeout(function ()
-    {
-        client.connect(Port, Host, function ()
-        {
-            console.log('ESP32CAM 재연결 성공');
-            client.write("hello server!");
-            // client.write('GET /stream HTTP/1.1\r\n');
-            // client.write(`Host: 192.168.4.1:81\r\n`);
-            // client.write('Connection: keep-alive\r\n');
-            // client.write('Cache-Control: no-cache\r\n');
-            // client.write('User-Agent: Mozilla/5.0\r\n');
-            // client.write('Accept: */*\r\n\r\n');
-        })
-    })
+//     setTimeout(function ()
+//     {
+//         client.connect(Port, Host, function ()
+//         {
+//             console.log('ESP32CAM 재연결 성공');
+//             client.write("hello server!");
+//             // client.write('GET /stream HTTP/1.1\r\n');
+//             // client.write(`Host: 192.168.4.1:81\r\n`);
+//             // client.write('Connection: keep-alive\r\n');
+//             // client.write('Cache-Control: no-cache\r\n');
+//             // client.write('User-Agent: Mozilla/5.0\r\n');
+//             // client.write('Accept: */*\r\n\r\n');
+//         })
+//     })
     
-});
+// });
 ////////////////////////////////////////net.Socket();
 
 var capture_count = 0;
