@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="/script.js"></script>
+    <link rel="stylesheet" href="/css/main.css">
+
+
+    <!-- custom css -->
+    <!-- <link rel="stylesheet" href="/public/css/main.css"> -->
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+        google.charts.load("current", { packages: ["corechart"] });
+        google.charts.setOnLoadCallback(drawBarChart);
+        google.charts.setOnLoadCallback(drawLineChart);
+        google.charts.setOnLoadCallback(drawplaceChart);
+    </script>
+
+    <style>
+
+
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="header">
+            <div class="logo">
+                <h1><a href="/">Bodycare</a></h1>
+            </div>
+
+        </div>
+    </header>
+
+    <section>
+        <!-- 왼쪽 메뉴 -->
+        <div id="menu" class="">
+            <ul class="close_menu_list">
+                <li><a id="open" onclick="open_menu_event()" class="" href="#"><img id="open" src="/img/right.png"
+                            alter="열기"></a></li>
+                <li><a id="menu_icon" class="invisible" href="/"><img src="/img/home_button.png" alter="메인"></a></li>
+                <li><a id="menu_icon" class="invisible" href="/camera/setting"><img src="/img/camera.png"
+                            alter="촬영세팅"></a></li>
+                <li><a id="menu_icon" class="invisible" href="/shoot"><img src="/img/shoot.png" alter="촬영"></a></li>
+                <li><a id="menu_icon" class="invisible" href="/album"><img src="/img/album.png" alter="앨범"></a></li>
+                <li><a id="menu_icon" onclick="close_menu_event()" class="invisible" href="#"><img src="/img/left.png"
+                            alter="닫기"></a></li>
+            </ul>
+        </div>
+
+        <!-- 차트부분 -->
+        <div class="shoot_camera_section">
+            <div id="shoot_div">
+                <ul id="shoot_ul">
+                    <li><canvas></canvas>
+                        <p>전</p>
+                    </li>
+                    <li><canvas></canvas>
+                        <p>우</p>
+                    </li>
+                </ul>
+                <ul id="shoot_ul">
+                    <li><canvas></canvas>
+                        <p>좌</p>
+                    </li>
+                    <li><canvas></canvas>
+                        <p>후</p>
+                    </li>
+                </ul>
+
+                <button id="cancel">촬영취소</button>
+
+            </div>
+            <canvas id="shoot_img"></canvas>
+            <div id="shoot_img_div">
+                <button id="real_shoot_button" type="button"><img src="/img/shootButton.png"></button>
+            </div>
+
+            <script>
+
+                const $shootButton = document.getElementById('real_shoot_button');
+
+                $shootButton.addEventListener('click', function () {
+                    const $shoot_div = document.getElementById('shoot_div');
+                    const $img = document.getElementById('shoot_img');
+                    const $img_div = document.getElementById('shoot_img_div');
+                    const $album = document.getElementById('album_div');
+                    $shoot_div.className = "invisible";
+                    $img.className = "invisible";
+                    $img_div.className = "invisible";
+                    $album.className = "";
+
+                })
+
+            </script>
+        </div>
+
+        <div id="album_div" class="invisible">
+            <div id="album" class="">
+                <ul>
+                    <li><img id="album_front" src="/img/orange.png"></li>
+                    <li><img id="album_right" src="/img/apple.png"></li>
+                    <li><img id="album_left" src="/img/grape.jpg"></li>
+                    <li><img id="album_back" src="/img/watermelon.jpg"></li>
+
+
+
+                </ul>
+
+
+            </div>
+        </div>
+
+
+    </section>
+    <!-- 
+<script>
+    const $inputName = document.getElementById('inputName');
+    $inputName.addEventListener()
+</script> -->
+</body>
+
+</html>

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="/script.js"></script>
+    <link rel="stylesheet" href="/css/main.css">
+
+    <!-- custom css -->
+    <!-- <link rel="stylesheet" href="/public/css/main.css"> -->
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+        google.charts.load("current", { packages: ["corechart"] });
+        google.charts.setOnLoadCallback(drawBarChart);
+        google.charts.setOnLoadCallback(drawLineChart);
+        google.charts.setOnLoadCallback(drawplaceChart);
+    </script>
+
+    <style>
+        
+    </style>
+</head>
+
+<body>
+    <!-- <header>
+        <div class="header">
+            <div class="logo">
+                <h1><a href="/">Bodycare</a></h1>
+            </div>
+
+        </div>
+    </header> -->
+
+    <section>
+        <!-- 왼쪽 메뉴 -->
+        <div id="menu" class="">
+            <ul class="close_menu_list">
+                <li><a id="open" onclick="open_menu_event()" class="" href="#"><img id="open" src="/img/right.png" alter="열기"></a></li>
+                <li><a id="menu_icon" class="invisible" href="/"><img src="/img/home_button.png" alter="메인"></a></li>
+                <li><a id="menu_icon" class="invisible" href="/chart"><img src="/img/chart.png" alter="차트"></a></li>
+                <li><a id="menu_icon" class="invisible" href="/camera"><img src="/img/camera.png" alter="촬영"></a></li>
+                <li><a id="menu_icon" onclick="close_menu_event()" class="invisible" href="#"><img src="/img/left.png" alter="닫기"></a></li>
+            </ul>
+        </div>
+
+        <!-- 차트부분 -->
+        <div class="chart_section">
+            <div>
+                <!-- 막대차트 -->
+                <div class="barchart_background"></div>
+                <div id="barchart_values"></div>
+            </div>
+            <div>
+                <!-- 선차트 -->
+                <div class="linechart_background"></div>
+                <div id="curve_chart"></div>
+            </div>
+            <div>
+                <!-- 내 정보 -->
+                <div class="myInfo_background"></div>
+                <div id="myInfo" class="">
+                    <span class="infoText">내 정보<a id="myInfo_open" class="" onclick="open_myInfo_menu()" href="#"><img
+                                src="/img/open_info.png" alter=""></a>
+                        <a id="myInfo_close" class="invisible" onclick="close_myInfo_menu()" href="#"><img
+                                src="/img/close_info.png" alter=""></a></span>
+                </div>
+            </div>
+            <div>
+                <!-- 영역차트 -->
+                <div id="place" class="placechart_background"></div>
+                <div id="chart_div" class="" style="width: 550px; height: 370px;"></div>
+            </div>
+        </div>
+
+
+
+    </section>
+
+
+</body>
+
+</html>

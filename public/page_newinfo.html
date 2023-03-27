@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="page_newinfo.css">
+    <script src = "http://cdn.socket.io/4.5.0/socket.io.min.js"></script>
+
+</head>
+<nav>
+    <!-- 좌측 바 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
+    <div id="clock_space" class="">
+        <span id="ampm">ampm</span>
+        <span id="clock">clock</span>
+        <span id="day"></span>
+    </div>
+
+    <div id="icon_bar" class="">
+        <div id="icon1" class="icon">
+            <img id="view_chart" class="icon_img" src="/img/view_chart_white.png">
+            <p class="icon_text">차트 보기</p>
+        </div>
+        <div id="icon2" class="icon">
+            <img id="user_scan" class="icon_img" src="/img/user_scan_white.png">
+            <p class="icon_text">새로 촬영</p>
+        </div>
+        <div id="icon3" class="icon">
+            <img id="view_record" class="icon_img" src="/img/view_report_white.png">
+            <p class="icon_text">기록 보기</p>
+        </div>
+    </div>
+    <img id="left_mark" class="left_hide" src="/img/left.png">
+    <img id="right_mark" class="right_see" src="/img/right.png">
+    <!-- 좌측 바 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
+</nav>
+
+<body>
+    <div id="page_content" class="">
+        <div id="info_space">
+            <p id="info_text">성별을 입력해주세요.</p>
+
+            <div id="info_input_frame" class="">
+                <input id="info_input" class="" placeholder="성별 입력" maxlength="2">
+                <img id="info_icon" src="/img/enter.png">
+            </div>
+
+            <div id="warn_message">
+                <img src="/img/warning.png" class="warn_icon">
+                <span class="warn_text">한글만 입력해주세요.</span>
+            </div>
+
+            <div id="info_display_frame" class="">
+                <span id="info_name" class="info_item"></span>
+                <span id="info_gen" class="info_item"></span>
+                <span id="info_age" class="info_item"></span>
+                <span id="info_hei" class="info_item"></span>
+                <span id="info_wei" class="info_item"></span>
+                <span id="info_con" class="info_item"></span>
+            </div>
+
+            <div id="info_progress_frame" class="">
+                <div id="progress_line_show" class="progress_line"></div>
+                <div id="progress_line_show_n" class="progress_line"></div>
+
+
+                <div id="test_frame">
+                    <div id="icon_square_gen" class="icon_square">
+                        <img src="/img/people.png" class="icon_png">
+                    </div>
+                    <div id="icon_square_age" class="icon_square">
+                        <img src="/img/age.png" class="icon_png">
+                    </div>
+                    <div id="icon_square_hei" class="icon_square">
+                        <img src="/img/height.png" class="icon_png">
+                    </div>
+
+                    <div id="icon_square_wei" class="icon_square">
+                        <img src="/img/weight.png" class="icon_png">
+                    </div>
+                    <div id="icon_square_con" class="icon_square">
+                        <img src="/img/phone.png" class="icon_png">
+                    </div>
+
+
+                    <div id="border_gen" class="icon_border">
+                        <div class="border"></div>
+                    </div>
+                    <div id="border_age" class="icon_border">
+                        <div class="border"></div>
+                    </div>
+                    <div id="border_hei" class="icon_border">
+                        <div class="border"></div>
+                    </div>
+                    <div id="border_wei" class="icon_border">
+                        <div class="border"></div>
+                    </div>
+                    <div id="border_con" class="icon_border">
+                        <div class="border"></div>
+                    </div>
+
+                </div>
+
+
+            </div>
+            
+
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+    <!-- 배경 웨이브 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
+    <div id="background_wave">
+        <canvas id="wave_canvas"></canvas>
+    </div>
+    <!-- 배경 웨이브 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
+
+
+    <!-- 맨 위로 버튼 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
+    <div style="position:fixed;bottom:20px;right:15px;">
+        <img id="btn_top" class="btn_top_hide" src='/img/totop2.png' onmouseover="this.src='totop2_over.png'"
+            onmouseout="this.src='totop2.png'" alt="맨 위로">
+    </div>
+    <!-- 맨 위로 버튼 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
+</body>
+
+
+<script src="page_newinfo.js"></script>
+
+</html>

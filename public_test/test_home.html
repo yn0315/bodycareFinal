@@ -1,0 +1,53 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache">
+
+    <!-- reset.css -->
+
+    <title>MYTEST</title>
+    
+    <script src = "http://cdn.socket.io/4.5.0/socket.io.min.js"></script>
+    <script>
+        console.log("io.js 아래");
+    </script>
+
+    <link rel="stylesheet" type="text/css" href="test_home.css">
+</head>
+
+<body>
+    <header>
+        test
+
+    </header>
+
+    <button type='submit' id="send-image" herf="/shoot">Send Img</button>
+    <button type="'submit" id="capture_btn">Capture</button>
+    <img id="cam_img" src="http://192.168.4.1:81/stream" crossorigin="anonymous">
+    <canvas id="canvas" height="350" width="350"></canvas>
+    <canvas id="capture_1" height="300" width="300"></canvas>
+    <canvas id="capture_2" height="300" width="300"></canvas>
+    <canvas id="capture_3" height="300" width="300"></canvas>
+    <canvas id="capture_4" height="300" width="300"></canvas>
+
+    <!-- <py-env>
+        <py-imports>
+            import cv2
+        </py-imports>
+        <py-script src="cam_test.py"></py-script>
+    </py-env>
+     -->
+    <!-- </py-script> -->
+    <script>
+        console.log("/test_home.js 직전");
+    </script>
+    <script src="test_home.js"></script>
+
+
+</body>
+
+</html>

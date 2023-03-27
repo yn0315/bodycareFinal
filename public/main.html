@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="/script.js"></script>
+    <link rel="stylesheet" href="/css/main.css">
+
+    <!-- custom css -->
+    <!-- <link rel="stylesheet" href="/public/css/main.css"> -->
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script>
+        google.charts.load("current", { packages: ["corechart"] });
+        google.charts.setOnLoadCallback(drawBarChart);
+        google.charts.setOnLoadCallback(drawLineChart);
+        google.charts.setOnLoadCallback(drawplaceChart);
+    </script>
+
+    <style>
+        
+    </style>
+</head>
+
+<body>
+    <!-- <header>
+        <div class="header">
+            <div class="logo">
+                <h1><a href="/">Bodycare</a></h1>
+            </div>
+
+        </div>
+    </header> -->
+
+    <section>
+        <!-- 왼쪽 메뉴 -->
+        <div id="menu" class="">
+            <ul class="close_menu_list">
+                <li><a id="open" onclick="open_menu_event()" class="" href="#"><img id="open" src="/img/right.png" alter="열기"></a></li>
+                <li><a id="menu_icon" class="invisible" href="/"><img src="/img/home_button.png" alter="메인"></a></li>
+                <li><a id="menu_icon" class="invisible" href="/chart"><img src="/img/chart.png" alter="차트"></a></li>
+                <li><a id="menu_icon" class="invisible" href="/camera"><img src="/img/camera.png" alter="촬영"></a></li>
+                <li><a id="menu_icon" class="invisible" href="/record"><img src="/img/album.png" alter="앨범"></a></li>
+                <li><a id="menu_icon" onclick="close_menu_event()" class="invisible" href="#"><img src="/img/left.png" alter="닫기"></a></li>
+            </ul>
+        </div>
+
+        
+        <div class="menu_section">
+            <!-- <div id="main_link">
+                <button id="new_shoot" class="main_button"><a href="/camera">새로 촬영</a></button>
+                <button id="show_data" class="main_button"><a href="/album">기록 조회</a></button>
+            </div>
+
+
+
+            <div id="shootBox" class="invisible">
+                <select id="selectBox"name="목록" onchane="changeSelection()">
+                    <option>이름</option>
+                    <option>날짜</option>
+                <input id="inputName" type="text" placeholder="이름을 입력해주세요.*">
+                <div id="inputBox" class="invisible">
+                     <div id="inputName"> -->
+                    <!-- </div> -->
+                    <!-- <div id="inputGender">
+                        <input class="gender" name="gender" type="radio"><span class="genderText">남성</span>
+                        <input class="gender" name="gender" type="radio"><span class="genderText">여성</span>
+                    </div>
+                    <div id="inputAgeKg">
+                        <input id="inputAge" type="text" placeholder="나이*">
+                        <input id="inputKg" type="text" placeholder="체중*">
+                    </div>
+                    <input id="inputNumber" type="text" placeholder="연락처">
+                    <div id="buttonDiv">
+                        <button onclick="readyGo()" id="shootButton" type="submit"><img id="ready" class=""
+                                src="/img/shootReady.png"></button>
+                    </div>
+                </div> -->
+        </div>
+
+        
+
+
+    </section>
+
+
+</body>
+
+</html>

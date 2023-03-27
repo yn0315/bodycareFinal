@@ -1,0 +1,539 @@
+* {
+  padding: 0px;
+  margin: 0px;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+  -webkit-user-drag: none;
+  -khtml-user-drag: none;
+  -moz-user-drag: none;
+  -o-user-drag: none;
+}
+
+/* 좌측 아이콘 바 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ */
+.icon_img:hover {
+  animation: zoom 0.2s;
+}
+
+@keyframes zoom {
+  0% {
+    transform: scale(1.0);
+  }
+
+  10% {
+    transform: scale(1.03);
+  }
+
+  25% {
+    transform: scale(1.06);
+  }
+
+  35% {
+    transform: scale(1.09);
+  }
+
+  50% {
+    transform: scale(1.11);
+  }
+
+  60% {
+    transform: scale(1.09);
+  }
+
+  75% {
+    transform: scale(1.06);
+  }
+
+  90% {
+    transform: scale(1.03);
+  }
+
+  100% {
+    transform: scale(1.0);
+  }
+}
+
+nav {
+  z-index: 9998;
+  display: flex;
+  position: fixed;
+  top: 0;
+  left: 0;
+  align-items: center;
+  width: 100px;
+  height: 100%;
+  /* background: rgb(123, 102, 200); */
+
+  box-shadow: 6px 0px 2px -5px rgb(83, 83, 83);
+}
+
+nav,
+.left_see,
+.right_see {
+  background: rgb(156, 140, 216);
+}
+
+nav #clock_space {
+  user-select: none;
+  position: absolute;
+  font-weight: bold;
+  color: white;
+
+  max-width: 0px;
+  white-space: nowrap;
+  overflow: hidden;
+  transition: max-width 0.2s ease-in-out, transform 0.2s ease-in-out;
+}
+
+.invisible {
+  display: none;
+}
+
+nav #ampm {
+  font-size: 15px;
+}
+
+nav #clock {
+  font-size: 25px;
+}
+
+#icon_bar {
+  user-select: none;
+  position: absolute;
+  top: 150px;
+  left: 10px;
+  border-radius: 5px;
+  align-items: center;
+  text-align: center;
+  /* background-color: white; */
+  width: 62px;
+  height: 1px;
+}
+
+.icon,
+.icon_mouseover,
+.icon_mousedown {
+  margin-top: 3px;
+  margin-left: 3px;
+  margin-right: 0px;
+  margin-bottom: 0px;
+  border-radius: 5px;
+  width: 55px;
+  height: 55px;
+  display: block;
+  align-items: center;
+  text-align: center;
+}
+
+.icon_mouseover {
+  background-color: rgb(172, 159, 221);
+}
+
+.icon_mousedown {
+  background-color: whitesmoke;
+}
+
+#view_chart,
+#user_scan,
+#view_record {
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+  -webkit-user-drag: none;
+  -khtml-user-drag: none;
+  -moz-user-drag: none;
+  -o-user-drag: none;
+}
+
+.icon_img,
+.icon_img_mousedown {
+  position: absolute;
+  left: 3px;
+  display: inline-block;
+  padding: 3px;
+  border-radius: 3px;
+  margin: 5px;
+  width: 40px;
+  height: 40px;
+}
+
+.icon_img_mousedown {
+  background-color: rgb(189, 175, 240);
+}
+
+.icon_text,
+.icon_text_mousedown {
+  max-width: 0px;
+  position: absolute;
+  left: 107px;
+  margin: 15px 0 15px 0;
+
+
+  white-space: nowrap;
+  overflow: hidden;
+  transition: max-width 0.2s ease-in-out, transform 0.2s ease-in-out;
+
+
+  display: inline-block;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.icon_text {
+  color: whitesmoke;
+  /* color: black; */
+}
+
+.icon_mouseover .icon_text {
+  color: whitesmoke;
+}
+
+.icon_text_mousedown {
+  color: rgb(207, 207, 207);
+}
+
+.left_hide,
+.right_hide {
+  display: none;
+}
+
+
+.left_see,
+.right_see {
+  user-select: none;
+  z-index: 9999;
+  padding: 10px 0px;
+  border-radius: 10px 10px;
+  top: 380px;
+  left: 50px;
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  display: inline-block;
+}
+
+.left_see {
+  /* box-shadow: 5px 0px 3px -2px rgb(83, 83, 83);*/
+  box-shadow: 6px 0px 2px -5px rgb(83, 83, 83);
+}
+
+/* 좌측 아이콘 바 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ */
+
+
+
+
+/* 맨 위로 버튼 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ */
+#btn_top {
+  width: 70px;
+  height: 70px;
+}
+
+/* 맨 위로 버튼 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ */
+
+
+
+/* @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 배경 웨이브 */
+#background_wave {
+  user-select: none;
+  -ms-user-select: none;
+  outline: 0;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  z-index: -1000;
+  position: fixed;
+  bottom: 0px;
+  width: 100%;
+  height: 400px;
+}
+
+#wave_canvas {
+  z-index: -1000;
+  width: 100%;
+  height: 100%;
+}
+
+/* @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@  배경 웨이브 */
+
+
+
+body {
+  display: block;
+  flex-direction: column;
+  justify-content: center;
+  padding-left: 100px;
+  height: 50px;
+  width: 1720px;
+}
+
+#page_content {
+  width: 1700px;
+  height: 1000px;
+  flex-direction: row;
+  display: flex;
+  justify-content: center;
+  background-color: rgba(248, 248, 247, 0.1);
+}
+
+#info_text {
+  position: absolute;
+  white-space: nowrap;
+  color: black;
+  font-size: 40px;
+  font-weight: 800;
+
+  bottom: 550px;
+}
+
+#info_space {
+  width: 700px;
+  height: 500px;
+  position: absolute;
+  display: flex;
+
+  top: 250px;
+
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+#info_input_frame {
+  display: flex;
+  position: absolute;
+  justify-content: center;
+  align-items: center;
+  padding: 11px;
+  /* width: 330px;
+  height: 60px; */
+  top: 15px;
+  background-color: white;
+  border: 4px solid #d66095;
+}
+
+#info_input {
+  border: 1px solid transparent;
+
+  width: 300px;
+  height: auto;
+  font-size: 30px;
+  font-weight: bold;
+
+  /* bottom: 300px; */
+}
+
+#info_input:focus {
+  outline: none;
+}
+
+#info_icon {
+  width: 25px;
+  height: 25px;
+}
+
+
+#info_display_frame {
+  width: 750px;
+  height: 150px;
+  /* background-color: rgb(233, 233, 233); */
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  /* 3개의 열 */
+  grid-template-rows: repeat(2, 1fr);
+  /* 2개의 행 */
+
+  padding-bottom: 20px;
+  justify-content: center;
+  text-align: center;
+}
+
+#info_name {
+  color: rgb(45, 45, 45);
+  font-size: 50px;
+  font-weight: bold;
+  padding: 5px;
+
+  grid-column: 1 / span 6;
+  grid-row: 1 / 2;
+  margin-bottom: 10px;
+}
+
+#info_gen,
+#info_age,
+#info_hei,
+#info_wei,
+#info_con {
+  overflow: hidden;
+  white-space: nowrap;
+  /* color: rgb(123, 102, 200); */
+  color: black;
+  font-size: 27px;
+  font-weight: bold;
+  align-self: end;
+  padding: 5px;
+}
+
+
+#info_progress_frame {
+  width: 800px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  /* background-color: peachpuff; */
+}
+
+
+
+#info_progress_frame .progress_line {
+  z-index: -1;
+  height: 6px;
+}
+
+#progress_line_show {
+  width: 0%;
+  background-color: rgb(214, 96, 149);
+  /* border: 1px solid rgb(214, 96, 149); */
+}
+
+#progress_line_show_n {
+  width: 0%;
+  background-color: white;
+  /* border: 1px solid rgb(214, 96, 149); */
+}
+
+.icon_square {
+  max-width: 0px;
+
+  z-index: 100;
+  overflow: hidden;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background-color: rgb(255, 255, 255);
+
+  justify-content: center;
+  align-items: center;
+  display: flex;
+}
+
+.icon_png {
+  flex: none;
+  width: 46px;
+  height: 46px;
+}
+
+#icon_square_gen {
+  position: absolute;
+  left: 3%;
+  top: 60.8%;
+}
+
+#icon_square_age {
+  position: absolute;
+  left: 24%;
+  top: 60.8%;
+}
+
+#icon_square_hei {
+  position: absolute;
+  left: 45.5%;
+  top: 60.8%;
+}
+
+#icon_square_wei {
+  position: absolute;
+  left: 67%;
+  top: 60.8%;
+}
+
+#icon_square_con {
+  position: absolute;
+  left: 89%;
+  top: 60.8%;
+
+  max-width: 0px;
+}
+
+.icon_border {
+  max-width: 0px;
+
+  position: absolute;
+  overflow: hidden;
+  width: 70px;
+  height: 70px;
+
+  justify-content: center;
+  align-items: center;
+}
+
+.border {
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  background-color: rgb(255, 255, 255);
+  border: 5px solid rgb(214, 96, 149);
+}
+
+
+
+
+#border_gen {
+  /* max-width: 65px; */
+  left: 2.4%;
+  top: 59.9%;
+}
+
+#border_age {
+  left: 23.4%;
+  top: 59.9%;
+}
+
+
+#border_hei {
+  left: 44.9%;
+  top: 59.9%;
+}
+
+#border_wei {
+  left: 66.3%;
+  top: 59.9%;
+}
+
+#border_con {
+  left: 88.4%;
+  top: 59.9%;
+}
+
+#warn_message {
+  position: absolute;
+  top: 78px;
+
+  white-space: nowrap;
+  width: 250px;
+  height: 30px;
+
+  justify-content: center;
+  align-items: center;
+
+  display: none;
+}
+
+#warn_message .warn_icon {
+  margin: 3px;
+  width: 17px;
+  height: 17px;
+}
+
+#warn_message .warn_text {
+  margin: 3px;
+  margin-bottom: 5px;
+
+  font-size: 15px;
+  font-weight: bold;
+  color: rgb(224, 33, 138);
+}

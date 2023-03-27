@@ -1,0 +1,1712 @@
+
+li {
+    list-style: none;
+}
+
+/* 좌측 아이콘 바 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ */
+.icon_img:hover {
+    animation: zoom 0.2s;
+  }
+  
+  @keyframes zoom
+  {
+    0% { transform: scale(1.0);}
+    10% { transform: scale(1.03);}
+    25% { transform: scale(1.06);}
+    35% { transform: scale(1.09);}
+    50% { transform: scale(1.11);}
+    60% { transform: scale(1.09);}
+    75% { transform: scale(1.06);}
+    90% { transform: scale(1.03);}
+    100% { transform: scale(1.0);}
+  }
+  
+  nav
+  {
+    z-index: 9998;
+    display: flex;
+    position: fixed;
+    top: 0;
+    left: 0;
+    align-items: center;
+    width: 100px;
+    height: 100%;
+    /* background: rgb(123, 102, 200); */
+    box-shadow: 6px 0px 2px -5px rgb(83, 83, 83);
+  }
+  
+  nav, .left_see, .right_see
+  {
+    background: rgb(156, 140, 216);
+  }
+  
+  nav #clock_space
+  {
+    user-select: none;
+    position: absolute;
+    font-weight: bold;
+    color:white;
+  
+    max-width: 0px;
+    white-space: nowrap;
+    overflow: hidden;
+    transition: max-width 0.2s ease-in-out, transform 0.2s ease-in-out;
+  }
+  
+  .invisible
+  {
+    display: none;
+  }
+  
+  nav #ampm
+  {
+    font-size: 15px;
+  }
+  nav #clock
+  {
+    font-size: 25px;
+  }
+  
+  #icon_bar
+  {
+    user-select: none;
+    position: absolute;
+    top: 150px;
+    left: 10px;
+    border-radius: 5px;
+    align-items: center;
+    text-align: center;
+    /* background-color: white; */
+    width: 62px;
+    height: 1px;
+  }
+  
+  .icon, .icon_mouseover, .icon_mousedown
+  {
+    margin-top: 3px;
+    margin-left: 3px;
+    margin-right: 0px;
+    margin-bottom: 0px;
+    border-radius: 5px;
+    width: 55px;
+    height: 55px;
+    display: block;
+    align-items: center;
+    text-align: center;
+  }
+  /* .icon
+  {
+    background-color: rgb(36, 3, 228);
+  } */
+  .icon_mouseover
+  {
+    background-color: rgb(172, 159, 221);
+  }
+  .icon_mousedown
+  {
+    background-color: whitesmoke;
+  }
+  
+  #view_chart, #user_scan, #view_record
+  {
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+    -webkit-user-drag: none;
+    -khtml-user-drag: none;
+    -moz-user-drag: none;
+    -o-user-drag: none;  
+  }
+  
+  .icon_img, .icon_img_mousedown
+  {
+    position: absolute;
+    left: 3px;
+    display: inline-block;
+    padding: 3px;
+    border-radius: 3px;
+    margin: 5px;
+    width: 40px;
+    height: 40px;
+  }
+  
+  .icon_img_mousedown
+  {
+    background-color: rgb(189, 175, 240);
+  }
+  
+  .icon_text, .icon_text_mousedown
+  {
+    max-width: 0px;
+    position: absolute;
+    left: 107px;
+    margin: 15px 0 15px 0;
+  
+  
+    white-space: nowrap;
+    overflow: hidden;
+    transition: max-width 0.2s ease-in-out, transform 0.2s ease-in-out;
+  
+  
+    display: inline-block;
+    font-size: 18px;
+    font-weight: bold;
+  }
+  .icon_text
+  {
+    color: whitesmoke;
+    /* color: black; */
+  }
+  .icon_mouseover .icon_text
+  {
+    color: whitesmoke;
+  }
+  .icon_text_mousedown
+  {
+    color: rgb(207, 207, 207);
+  }
+  
+  .left_hide, .right_hide
+  {
+    display: none;
+  }
+  
+  
+  .left_see, .right_see
+  {
+    user-select: none;
+    z-index: 9999;
+    padding: 10px 0px;
+    border-radius: 10px 10px;
+    top: 380px;
+    left: 50px;
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    display: inline-block;
+  }
+  
+  .left_see
+  {
+    /* box-shadow: 5px 0px 3px -2px rgb(83, 83, 83);*/
+    box-shadow: 6px 0px 2px -5px rgb(83, 83, 83); 
+  }
+/* 좌측 아이콘 바 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ */
+  
+
+
+/* 카메라 촬영@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ */
+.shoot_camera_section {
+    
+    position: absolute;
+    /* margin-top: 150px;
+    margin-left:200px; */
+    /* width: 82vw; */
+    /* height: 100px; */
+
+    margin-left: 10vw;
+    margin-top:10vh;
+    
+    width: 80%;
+    height: 80%;
+    
+    /* display: grid; */
+    /* border-radius: 5px; */
+    box-sizing: border-box;
+    /* border:3px solid blue; */
+    /* background: red; */
+}
+
+#shoot_div {
+    /* margin: 0; */
+    /* grid-column-start:1; */
+    /* display: grid; */
+    /* margin-top: -70px; */
+    /* margin: 0; */
+    float: left;
+    /* background: black; */
+    /* rgb(107, 66, 202); */
+    border: 5px solid rgba(214, 96, 149);
+    border-radius: 10%;
+    /* background: linear-gradient(135deg, rgba(231, 224, 255, 0.5), rgba(214, 96, 149, 0.5)); */
+
+
+    /* width : 35vw;
+    height: 77vh; */
+
+    width: 35vw;
+    height: 38vw;
+
+    /* width: 690px;
+    height: 750px; */
+    margin-left:30px;
+    box-sizing: border-box;
+    display: grid;
+    grid-template-rows: 18.5vw 18.5vw;
+    grid-template-columns: 17vw 17vw;
+
+}
+
+
+
+#shoot_div>div {
+    float: left;
+    box-sizing: border-box;
+    text-align: center;
+    
+    /* margin-left:10px; */
+}
+
+#shoot_div>div>p {
+    position:absolute;
+    display: block;
+    margin-left: 7vw;
+    margin-top : -25vh;
+    border :4px solid rgb(214, 96, 149);
+    border-radius: 50%;
+    /* border-top:3px solid rgb(134, 101, 153); */
+    width: 3.5vw;
+    height: 3.5vw;
+    color:#000;
+    box-sizing: border-box;
+    font-size: 2vw;
+    font-weight: bold;
+    /* font-family: 'Malgun Gothic';             */
+}
+
+#shoot_div>div>canvas {
+    display: block;
+    -webkit-transform : rotate(90deg);
+    transform:rotate(90deg);
+    /* width: 320px;
+    height: 220px; */
+
+    width: 16.5vw;
+    height: 12vw;
+
+    margin-left: 5px;
+    margin-top: 60px;
+    margin-bottom: 8vh;
+
+    border: 5px solid rgb(166, 149, 207);
+    border-radius: 10%;
+    box-sizing: border-box;
+    
+}
+
+#running_border
+{
+  display: none;
+  position: absolute;
+  width: 7vw;
+  height: 7vw;
+  /* border:1px solid black; */
+  
+  background: transparent;
+
+  margin-top: 50%;
+  margin-left: 40%;
+  z-index: 10;
+}
+
+#rect_center_line
+{
+  width: 7vw; 
+  height: 3px;
+  margin-top: 55%;
+  background: red;
+}
+
+.loading_rect
+{
+  position: absolute;
+  background: rgb(214, 96, 149);
+  width: 5%;
+  height: 5vh;
+  margin-top:40%;
+}
+
+
+#r1
+{
+  /* margin-top:40%; */
+  margin-left:25%;
+  animation: rect_scale 2s infinite;
+}
+#r2
+{
+  margin-left:35%;
+  animation: rect_scale 2s 0.3s infinite;
+}
+#r3
+{
+  margin-left:45%;
+  animation: rect_scale 2s 0.6s infinite;
+}
+#r4
+{
+  margin-left:55%;
+  animation: rect_scale 2s 0.9s infinite;
+}
+#r5
+{
+  margin-left:65%;
+  animation: rect_scale 2s 1.2s infinite;
+}
+@keyframes rect_scale
+{
+  0%
+  {
+    transform: scaleY(1);
+  }
+  20%
+  {
+    transform: scaleY(1.7);
+  }  
+  40%
+  {
+    transform: scaleY(1);
+  }
+  100%
+  {
+    transform: scaleY(1);
+  }
+}
+
+/* .rectangle-bounce {
+    text-align: center
+}
+
+.rectangle-bounce div {
+    height: 100%;
+    width: 7px;
+    margin: 0 3px 0 0;
+    background-color: #fff;
+    display: inline-block;
+    -webkit-animation: stretchdelay 1.2s infinite ease-in-out;
+    animation: stretchdelay 1.2s infinite ease-in-out
+}
+
+.rectangle-bounce .rect2 {
+    -webkit-animation-delay: -1.1s;
+    animation-delay: -1.1s
+}
+
+.rectangle-bounce .rect3 {
+    -webkit-animation-delay: -1.0s;
+    animation-delay: -1.0s
+}
+
+.rectangle-bounce .rect4 {
+    -webkit-animation-delay: -0.9s;
+    animation-delay: -0.9s
+}
+
+.rectangle-bounce .rect5 {
+    -webkit-animation-delay: -0.8s;
+    animation-delay: -0.8s
+}
+
+@-webkit-keyframes stretchdelay {
+    0%, 40%, 100% {
+        -webkit-transform: scaleY(0.4)
+    }
+
+    20% {
+        -webkit-transform: scaleY(1)
+    }
+}
+
+@keyframes stretchdelay {
+    0%, 40%, 100% {
+        transform: scaleY(0.4);
+        -webkit-transform: scaleY(0.4)
+    }
+
+    20% {
+        transform: scaleY(1);
+        -webkit-transform: scaleY(1)
+    }
+} */
+
+#cam_div
+{
+    position: absolute;
+    /* height: 700px;
+    width: 570px; */
+
+    /* width: 34.5%;
+    height: 75%; */
+
+    width: 29.7vw;
+    height: 38vw;
+    /* border:3px solid rgb(214, 96, 149); */
+    margin-left:40vw;
+    /* margin-top:-50px; */
+
+}
+
+
+#shoot_img 
+{
+    position: absolute;
+    /* width: 10px;
+    height: 10px; */
+    /* width: 640px;
+    height: 480px; */
+    margin-top: 0;
+    box-sizing: border-box;
+    margin-left: 25%;
+    margin-top: 50px;
+    border: 3px solid black;
+    padding: 2px;
+    visibility: hidden;
+    transform: rotate(90deg);
+    /* z-index: 5000; */
+}
+
+
+#now_rec
+{
+    position: absolute;
+    width : 0.8vw;
+    height : 1.5vh; 
+    border-radius: 50%;
+    border:5px solid black;
+    background: linear-gradient(45deg, Firebrick 50%, Coral);
+    margin-left : 23vw;
+    margin-top : 5vh;
+    opacity: 0.7;
+
+    /* text-align: right; */
+}
+#now_rec p 
+{
+    /* font-family:'Malgun Gothic'; */
+    font-size:15px;
+    font-weight: bold;
+    margin-left:1.5vw;
+    margin-top:-0.5vh;
+    opacity: 0.7;
+}
+
+#cam_canvas
+{
+    position: absolute;
+    /* width: 640px;
+    height: 480px; */
+
+    width: 33.3vw;
+    height: 25vw;
+    /* width:98%;
+    height: 67.5%; */
+    
+    box-sizing: border-box;
+    -webkit-transform : rotate(90deg);
+    transform:rotate(90deg);
+
+    margin-left: -7%;
+    margin-top: 18%;
+    
+
+    border: 3px solid black;
+    /* background-size:cover; */
+    padding-top:0%;
+    padding-bottom: 0%;
+    
+}
+
+
+#shutter_frame
+{
+    position: absolute;
+    /* box-sizing: border-box; */
+    
+    /* margin-left : 49px;
+    margin-top : 24px; */
+    margin-left:7%;
+    margin-top:3.8%;
+    /* width : 475px;
+    height: 635px; */
+    width: 24.8vw;
+    height: 33vw;
+    z-index: 10000;
+    background: transparent;
+    border : 3px solid red;
+    overflow: hidden;
+}
+
+
+#shoot_img_div {
+
+    position: relative;
+    width: 50px;
+    height: 50px;
+    top: 400px;
+    left: 950px;
+}
+
+/* 카메라 촬영@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ */
+
+
+
+
+
+/* 
+
+
+
+
+/* .border-rotate
+{
+
+    position: absolute;
+
+    margin-top: 80px;
+    margin-left: 10px;
+
+    height: 220px;
+    width: 320px;
+    -webkit-transform: rotate(90deg);
+    transform: rotate(90deg);
+    
+    box-sizing: border-box;
+
+    
+    background: linear-gradient(90deg, #663366 50%, transparent 50%), 
+                linear-gradient(90deg, #663366 50%, transparent 50%), 
+                linear-gradient(0deg, #663366 50%, transparent 50%), 
+                linear-gradient(0deg, #663366 50%, transparent 50%);
+    background-repeat: repeat-x, repeat-x, repeat-y, repeat-y;
+    background-size: 16px 4px, 16px 4px, 4px 16px, 4px 16px;
+    background-position: 0% 0%, 100% 100%, 0% 100%, 100% 0px;
+    border-radius: 5px;
+    padding: 10px;
+    animation: dash 5s linear infinite;
+}
+
+@keyframes dash 
+{
+    to
+    {
+        background-position: 100% 0%, 0% 100%, 0% 0%, 100% 100%;
+    }
+} */
+
+
+
+
+
+
+
+
+/* #real_shoot_button {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    border-style: none;
+    display: inline;
+    background: rgb(164, 152, 211);
+    background: transparent;
+    
+}
+
+#real_shoot_button img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+
+} */
+
+
+
+
+
+
+
+/* 카메라 설정@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ */
+
+/* 밝기, 대비, 배율세팅 */
+                                /* ///////////////////////////////////////////////////////////////////////// */
+#shootSetting {
+    /* float: right; */
+    display: inline-block;
+    width: 400px;
+    height: 300px;
+    background: rgb(224, 219, 241);
+    /* text-align: center; */
+    border-radius: 10px;
+    margin-top: 30px;
+    margin-left : 130px;
+
+    /* border: 3px solid red; */
+}
+
+#outerSettingBox {
+    margin-top: 10px;
+}
+
+#shootSetting h2 {
+    color: black;
+    margin-top: 20px;
+    margin-left : 60px;
+    /* font-family: 'Malgun Gothic';             */
+    font-weight: bold;
+    font-size:10vw;
+}
+
+#settingName {
+    position: absolute;
+    margin-top: 45px;
+    width: 8vw;
+    box-sizing: border-box;
+
+}
+
+#settingName p {
+    display: block;
+    color: black;
+    width: 50px;
+    margin-top: 50px;
+    margin-left: 20px;
+    /* margin-top: 50px; */
+    /* padding-right: 30px; */
+    /* font-family: 'Malgun Gothic'; */
+    box-sizing: border-box;
+    font-weight: bold;
+}
+
+#settingName p:first-child {
+    margin-top: 0;
+}
+
+#box {
+
+    box-sizing: border-box;
+
+}
+
+/* 촬영시 색상조절하는 바 */
+
+.seek-bar {
+    /* margin: 20px auto; */
+    cursor: pointer;
+    position: relative;
+    width: 250px;
+    height: 20px;
+    background: #fff;
+    border-radius: 5px;
+    /* box-sizing: border-box; */
+    float: right;
+    margin-right: 60px;
+    margin-top : 50px;
+    touch-action:none;
+}
+
+
+.seek-bar>.circle {
+    z-index: 100;
+    cursor: grab;
+    position: absolute;
+    /* position: relative; */
+    left: 0;
+    top: 50%;
+    width: 30px;
+    height: 30px;
+    transform: translate(-50%, -50%);
+    touch-action: none;
+}
+
+.seek-bar>.circle>span {
+    position: absolute;
+    
+    display: block;
+    width: 40px;
+    height: 40px;
+    line-height: 30px;
+    left: 50%;
+    top: 50%;
+    
+    transform: translate(-50%, -50%);
+    background: #663366;
+    border-radius: 100%;
+    text-align: center;
+    color: white;
+    font-weight: bold;
+}
+
+
+/* 밝기배율세팅 */
+#screenSetting {
+    float: right;
+    margin-top: 3%;
+    margin-left: 50%;
+    width: 400px;
+    height: 300px;
+    background: rgb(164, 152, 211);
+    text-align: center;
+    border-radius: 10px;
+    box-sizing: border-box;
+}
+
+
+#imgBox {
+  text-align: center;
+  position: absolute;
+  width: inherit;
+  height: 70px;
+  margin-top:230px;
+  margin-left:-30px;
+}
+
+#imgBox #back img {
+    /* margin-top:80px; */
+    position: absolute;
+    transform-origin: center bottom;
+    width: 50px;
+    height: 50px;
+    /* top: 65%; */
+    cursor: pointer;
+
+}
+
+/* ///////////////////////////////////////////////////////////////////////////// */
+
+
+
+
+
+
+
+
+
+
+
+/* 카메라 설정@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ */
+
+
+
+
+
+/* @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ */
+/* @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 촬영 직후 확인 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ */
+#album_div {
+  width: 80vw;
+  height: 100vh;
+  position: absolute;
+  top: 0;
+  left: 270px;
+}
+
+.frame_line
+{
+  position: absolute;
+  z-index: 5;
+  margin-top: 140px;
+  border-bottom: 3px dashed rgb(103, 60, 202);
+  width: 1300px;
+}
+
+#img_group
+{
+  user-select: none;
+  width: 1600px;
+  height: 1000px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+/* background-color: rgba(237, 236, 240, 0.87); */
+}
+
+#frame_title
+{
+  position: absolute;
+  align-self: flex-start;
+  align-items: center;
+  white-space: nowrap;
+  margin-top: 50px;
+  color: rgb(35, 35, 35);
+  font-size: 60px;
+  font-weight: bold;
+}
+
+#img_group .frame_class
+{
+  margin-top: 100px;
+  z-index: 55;
+  display: flex;
+  flex: none;
+  justify-content: center;
+  align-items: center;
+  width: 240px;
+  height: 800px;
+  flex-direction: column;
+
+/*background-color: rgba(218, 118, 118, 0.486);*/
+}
+
+#img_group .frame_class .text_class
+{
+  font-weight: bold;
+  font-size: 25px;
+  margin-bottom: 50px;
+  padding: 2px 10px 4px 10px;
+  color: rgba(245, 245, 245, 1);
+  border-radius: 3px;
+  background-color: rgb(107, 66, 202);
+}
+
+#img_group .frame_class .img_class
+{
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+  -webkit-user-drag: none;
+  -khtml-user-drag: none;
+  -moz-user-drag: none;
+  -o-user-drag: none;
+
+  box-shadow: 0px 4px 15px 1px grey;
+  flex: none;
+  width: 320px;
+  height: 240px;
+  -webkit-transform : rotate(90deg);
+  transform: rotate(90deg);
+}
+
+
+
+
+#frame_confirm
+{
+  height: 100px;
+  width: 150px;
+}
+#img_confirm
+{
+  position: relative;
+  top: 20px;
+
+  flex: none;
+  width: 200px;
+  height: 320px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: 12px;
+  height: 70px;
+  width: 170px;
+}
+
+#img_confirm_border
+{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 2px solid whitesmoke;
+  border-radius: 10px;
+  height: 60px;
+  width: 160px;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.img_confirm_border
+{
+  background-color: rgb(214, 96, 149);
+  color: whitesmoke;
+}
+
+.img_confirm_border_over
+{
+  background-color: rgb(190, 38, 107);
+}
+
+/* @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 촬영 직후 확인 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ */
+/* @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* 앨범 */
+/* 촬영 이후 앨범@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ */
+
+.album_section {
+    text-align: center;
+    position: relative;
+    margin-top: 5px;
+    width: 82vw;
+    height: 800px;
+    display: inline-block;
+    border-radius: 5px;
+    box-sizing: border-box;
+    /* background: gray; */
+}
+
+#album_div {
+    text-align: center;
+}
+
+#album {
+    position: absolute;
+    top: 30%;
+    left: 25%;
+}
+
+#album ul {
+    margin: auto;
+    text-align: center;
+    /* background: #000; */
+}
+
+#album ul li {
+    display: inline;
+    margin-left: 20px;
+
+}
+
+#album ul li:first-child {
+    /* display: inline; */
+    margin-left: 0;
+
+}
+
+
+#album ul li img {
+    width: 200px;
+    cursor: pointer;
+
+}
+
+/* 기록*/
+
+.record_section {
+    text-align: center;
+    position: relative;
+    margin-top: 5px;
+    width: 82vw;
+    height: 800px;
+    display: inline-block;
+    border-radius: 5px;
+    box-sizing: border-box;
+    /* background: gray; */
+
+}
+
+#record_div {
+    margin: 0;
+    position: absolute;
+    width: 82vw;
+    height: 800px;
+    text-align: center;
+    
+}
+
+#inner_record_div {
+    display: inline-block;
+    margin: 0;
+
+}
+
+#inner_record_div div {
+    float: left;
+    margin-left: 50px;
+}
+
+#searchPic {
+    width: 30px;
+    position : relative;
+    top: -30px;
+    left: 140px;
+    margin: 0;
+    cursor: pointer;
+}
+
+#before_frame {
+    position: absolute;
+    cursor: pointer;
+    top: 2%;
+
+}
+
+#before_frame img {
+    top: 10%;
+    width: 30px;
+}
+
+#before_frame img:active {
+    background: rgb(164, 152, 211);
+    border-radius: 5px;
+    padding: 2px;
+}
+        
+#record_one_div {
+    top: 10%;
+    width: 30px;
+    height: 30px;
+}
+
+#record_two_div {
+    width: 250px;
+    box-sizing: border-box;
+}
+
+#record_input {
+    
+    border-bottom: 1px solid #000;
+    /* padding: 10px; */
+    margin-top: 8%;
+    width: 100%;
+    /* border-radius: 8px; */
+    font-size: 15px;
+    font-weight: bold;
+    box-sizing: border-box;
+
+}
+
+#asc_desc {
+    background: transparent;
+    margin-top: 10px;
+    margin-left: 10px;
+    /* border: 1px solid black; */
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+}
+
+#asc_desc:active {
+    background: rgb(164, 152, 211);
+    margin-top: 11px;
+}
+
+#asc_desc img {
+    width: 30px;
+}
+/* 촬영 이후 앨범@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ */
+
+
+
+
+/* @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 카메라 설정  @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@*/
+#setting_space_backframe
+{
+  /* position: relative; */
+  position:absolute;
+  display: flex;
+  width: 10px; 
+  /* width 800px까지  */
+  height: 800px;
+  /* background-color: black; */
+}
+
+#setting_space
+{
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+  -webkit-user-drag: none;
+  -khtml-user-drag: none;
+  -moz-user-drag: none;
+  -o-user-drag: none;
+
+  position: absolute;
+  right: -50vw;
+  margin-top: 50px;
+  flex-direction: row;
+  align-items: center;
+  display: flex;
+}
+
+#setting_frame, #setting_btn
+{
+  box-shadow: 2px 0px 12px 1px rgba(0, 0, 0, 0.6);
+}
+
+#setting_frame
+{
+  background-color: rgb(123, 102, 200);
+  width: 50vw;
+  height: 90vh;
+
+  display: grid;
+  border-radius: 8% 0 0 8%;
+
+  justify-content: center;
+  align-items: center;
+  grid-template-columns: repeat(1, 1fr); /* 2개의 열 */
+  grid-template-rows: repeat(2, 1fr); /* 2개의 행 */
+}
+
+#setting_btn
+{
+  background-color: rgb(224, 220, 240);
+  width: 55px;
+  height: 120px;
+
+  display: flex;
+
+  justify-content: center;
+  align-items: center;
+
+  writing-mode: vertical-lr;
+  font-size: 20px;
+  font-weight: bold;
+  color: rgb(123, 102, 200);
+
+  border-left: 8px solid rgb(123, 102, 200);
+  /* border-top: 8px solid rgb(123, 102, 200); */
+  /* border-bottom: 8px solid rgb(123, 102, 200); */
+  border-radius: 55% 0 0 55%;
+}
+
+#setting_frame_zoom, #setting_frame_filter
+{
+  border-radius: 7% 2% 2% 7%;
+  width: 35vw;
+  height: 40vh;
+  margin:auto;
+  margin-left :10%;
+  
+}
+
+#setting_frame_zoom
+{
+  background-color: whitesmoke;
+}
+
+#setting_frame_filter #filter_title
+{
+  z-index: 5;
+  position: absolute;
+  font-size: 5vw;
+  font-weight: bold;
+
+  text-shadow: 1px 1px rgba(218, 208, 208, 0.158);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  white-space: nowrap;
+  width: 100px;
+  top: 30%;
+  left: 42.5%;
+}
+
+#setting_frame_filter
+{
+  position: relative;
+  background-color: rgb(233, 208, 171);
+}
+
+#setting_frame_filter .switching_img
+{
+  position: absolute;
+  margin-top:5%;
+  /* margin-left:3%; */
+  max-width: 250px;
+  max-height: 220px;
+  width: 9vw;
+  height: 15vw;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.6);
+}
+
+#setting_frame_filter #switching_img1
+{
+  z-index: 1;
+  top: 25px;
+  left: 35px;
+  transform: rotate(6deg);
+}
+
+#setting_frame_filter #switching_img2
+{
+  z-index: 2;
+  top: 55px;
+  left: 125px;
+  transform: rotate(3deg);
+}
+
+#setting_frame_filter #switching_img3
+{
+  z-index: 3;
+
+  top: 85px;
+  left: 255px;
+
+  transform: rotate(0deg);
+}
+
+#setting_frame_filter #switching_img4
+{
+  z-index: 2;
+
+  top: 55px;
+  left: 385px;
+
+  transform: rotate(-3deg);
+}
+
+#setting_frame_filter #switching_img5
+{
+  z-index: 1;
+
+  top: 25px;
+  left: 475px;
+  filter: blur(1px);
+  transform: rotate(-6deg);
+}
+
+
+
+#setting_frame_filter .img_title
+{
+  width: 100px;
+  margin-top:10%;
+  white-space: nowrap;
+  position: absolute;
+  font-size: 22px;
+  font-weight: bold;
+  color: rgba(0, 0, 0, 0.6);
+ 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#setting_frame_filter #img_title1
+{
+  z-index: 1;
+  margin-top: 43%;
+  left: 3%;
+  transform: rotate(6deg);
+}
+
+#setting_frame_filter #img_title2
+{
+  z-index: 2;
+  /* top: 275px;
+  left: 140px; */
+  margin-top:47%;
+  left:20%;
+  transform: rotate(4deg);
+}
+
+#setting_frame_filter #img_title3
+{
+  z-index: 3;
+  font-size: 33px;
+  color: rgb(135, 161, 209);
+  /* top: 305px;
+  left: 280px; */
+  margin-top:50%;
+  left:43%;
+  transform: rotate(0deg);
+}
+
+#setting_frame_filter #img_title4
+{
+  z-index: 2;
+  /* top: 275px;
+  left: 420px; */
+  margin-top:47%;
+  left:65%;
+  transform: rotate(-4deg);
+}
+
+#setting_frame_filter #img_title5
+{
+  z-index: 1;
+  /* top: 245px;
+  left: 530px; */
+  margin-top:43%;
+  left:85%;
+  transform: rotate(-6deg);
+}
+
+/* @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 카메라 설정  @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@*/
+
+
+
+
+
+
+
+
+*
+{
+  margin: 0;
+  padding: 0;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+  -webkit-user-drag: none;
+  -khtml-user-drag: none;
+  -moz-user-drag: none;
+  -o-user-drag: none;
+}
+
+body
+{
+    /* background-color: rgb(105, 105, 105); */
+    /* position: absolute; */
+    z-index: -123;
+    width: 1820px;
+    height: 920px;
+    /* display: flex; */
+    /* display: grid;
+    grid-template-columns: 500px 500px;
+    grid-template-rows: 500px 500px; */
+    /* align-items: center;
+    justify-content: center; */
+}
+
+/* @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 배경 웨이브 */
+#background_wave
+{
+  /* display: none; */
+
+  user-select: none;
+  -ms-user-select: none;
+  outline: 0;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  left: 0;
+  z-index: -1000;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  height: 400px;
+}
+
+#wave_canvas
+{
+  z-index: -1000;
+  width: 100%;
+  height: 100%;
+}
+/* @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@  배경 웨이브 */
+
+
+
+
+/* @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@    로딩  @@@@@@@@@@@@@@@@@@@@@@@@@@@*/
+/* @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@    로딩  @@@@@@@@@@@@@@@@@@@@@@@@@@@*/
+/* @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@    로딩  @@@@@@@@@@@@@@@@@@@@@@@@@@@*/
+#loading_frame
+{
+  position: absolute;
+  width: 1200px;
+  height: 100%;
+  /* 1200 / 100% */
+  display: grid;
+  /* grid */
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  /* background-color: white; */
+  margin-left:300px;
+  grid-template-rows: 1fr 1fr; /* 2개의 행 */
+}
+
+
+
+#progress_space
+{
+  width: 100%;
+  height: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.loader
+{
+  width: 48px;
+  height: 48px;
+  /* display: block; */
+  position: absolute;
+  margin-bottom: 100px;
+  bottom: 0px;
+}
+.loader::after,
+.loader::before {
+  content: '';
+  width: 48px;
+  height: 48px;
+  border: 3px solid #cc8282;
+  position: absolute;
+  left: 0;
+  top: 0;
+  box-sizing: border-box;
+  animation: rotation2 2s ease-in-out infinite;
+}
+.loader::after {
+  border-color: rgb(123, 102, 200);
+  animation-delay: 1s;
+}
+
+@keyframes rotation2 {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+} 
+
+.progress-container, .progress-text, .progress-text-glitch
+{
+  width: 850px;
+}
+
+.progress-container {
+  position: absolute;
+  margin: 50px auto;
+  height: 30px;
+
+  bottom: 0px;
+  /* background-color: rgb(255, 255, 255); */
+  border: 3.5px solid rgb(123, 102, 200);
+
+  box-shadow: 0px 0px 5px 1px rgba(55, 55, 55, 0.5);
+  display: flex;
+  align-items: center;
+  border-radius: 10px;
+}
+
+.progress-bar {
+  
+  text-align: center;
+
+  display: flex;
+  align-items: center;
+
+  position: relative;
+  overflow: hidden;
+  top: 0;
+  left: 0;
+  width: 0%;
+  height: 100%;
+  background: rgb(123, 102, 200);
+  border-radius: 5px;
+}
+
+.progress-text, .progress-text-glitch {
+  user-select: none;
+  position: absolute;
+  text-align: center;
+  line-height: 20px;
+  color: rgb(62, 48, 116);
+  font-weight: bold;
+  /* background-color: #412222; */
+}
+
+.progress-bar .progress-text
+{
+  color: rgb(255, 255, 255);
+}
+
+.progress-bar .progress-text-glitch
+{
+  color: rgb(255, 255, 255);
+  animation: blink 1.5s infinite;
+}
+
+@keyframes blink {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+#loading_slide
+{
+  position: relative;
+  top: 0px;
+  
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  z-index: -555;
+
+  width: 1200px;
+  height: 700px;
+  /* background-color: rgba(0, 0, 0, 0.473); */
+
+  flex-direction: row;
+}
+
+
+#tooltip
+{
+  /* display: block;*/
+  z-index: 9999;
+
+  /* text-align: center; */
+  /* overflow: hidden; */
+  white-space: nowrap;
+
+  width: auto;
+  height: 150px;
+  border-radius: 5px;
+  /* border: 3px solid rgba(123, 102, 200, 0.5); */
+  /* background-color: whitesmoke; */
+  font-weight: bold;
+  color: rgba(0, 0, 0, 0.9);
+  font-size: 20px;
+}
+
+
+#loading_img
+{
+  display: flex;
+  
+  width: 870px;
+  height: 600px;
+  transform: rotateX(-40deg) rotateY(11deg) rotateZ(15deg);
+  border-radius: 25px;
+
+  opacity: 1;
+  /* background-image: url(img_loading1.png); */
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: contain;
+}
+
+#loading_img::before
+{
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  
+  background-image: radial-gradient(circle at center, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.26) 370px, rgba(255, 255, 255, 0.91));
+  
+}
+
+.test_icon_normal, .test_icon_arrow, .test_icon_backspace, .test_icon_top
+{
+  justify-content: center;
+  align-items: center;
+  height: auto;
+  background-position: center center;
+  vertical-align: bottom;
+  line-height: 1.9;
+}
+
+.test_icon_normal
+{
+  width: 61px;
+}
+
+.test_icon_backspace
+{
+  width: 45px;
+}
+
+.test_icon_top
+{
+  width: 40px;
+}
+
+.test_icon_arrow
+{
+  width: 33px;
+}
+
+/* @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@    로딩  @@@@@@@@@@@@@@@@@@@@@@@@@@@*/
+/* @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@    로딩  @@@@@@@@@@@@@@@@@@@@@@@@@@@*/
+/* @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@    로딩  @@@@@@@@@@@@@@@@@@@@@@@@@@@*/
+
+
+
+
+
+
+
+
+/* @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 배경 웨이브  @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@*/
+#background_wave
+{
+  user-select: none;
+  -ms-user-select: none;
+  outline: 0;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  z-index: -1000;
+  position: fixed;
+  bottom: 0px;
+  width: 100%;
+  height: 400px;
+}
+
+#wave_canvas
+{
+  z-index: -1000;
+  width: 100%;
+  height: 100%;
+}
+/* @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 배경 웨이브  @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@*/
+
+
+
+/* 스크롤바  */
+body::-webkit-scrollbar {
+  width: 15px;  /* 스크롤바의 너비 */
+  height: 15px;
+}
+
+body::-webkit-scrollbar-thumb {
+  height: 25%; /* 스크롤바의 길이 */
+  background-image: linear-gradient(to top, rgba(156, 140, 216, 0.54), rgba(225, 146, 183, 0.54)); /* 스크롤바의 색상 */
+  box-shadow: inset 0 0 1px rgba(156, 140, 216, 0.9);
+  border-radius: 8px;
+
+  /* 스크롤바와 영역에 간격 주기 : margin, padding 불가 */
+  background-clip: padding-box;
+  border: 2px solid transparent;
+}
+
+body::-webkit-scrollbar-track {
+  background: rgba(248, 248, 248, 0.96);  /*스크롤바 뒷 배경 색상*/
+}

@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html id="html_shoot" lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache">
+
+    <title>Document</title>
+
+    <!-- <link rel="stylesheet" href="/css/main.css"> -->
+    <link rel="stylesheet" href="/css/shoot.css">
+
+
+    <!-- custom css -->
+    <!-- <link rel="stylesheet" href="/public/css/main.css"> -->
+    <!-- <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script> -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src = "http://cdn.socket.io/4.5.0/socket.io.min.js"></script>
+
+    <script>
+        // google.charts.load("current", { packages: ["corechart"] });
+        // google.charts.setOnLoadCallback(drawBarChart);
+        // google.charts.setOnLoadCallback(drawLineChart);
+        // google.charts.setOnLoadCallback(drawplaceChart);
+    </script>
+</head>
+
+<body>
+    
+    <script>
+        console.log("sqlinput");
+        var $arr = [];
+        function sqlInput(){
+            $arr.push({ name: '<%=users.name%>', age: '<%=users.age%>', gender: '<%=users.gender%>', tel: '<%=users.tel%>', height: '<%=users.height%>', weight: '<%=users.weight%>' });
+
+        console.log($arr);
+
+        }
+
+        sqlInput();
+
+    </script>
+
+    <section>
+        <!-- 왼쪽 메뉴 -->
+        <!-- <div id="menu" class="">
+            <ul class="close_menu_list">
+                <li><a id="open" onclick="open_menu_event()" class="" href="#"><img id="open" src="/img/right.png"
+                            alter="열기"></a></li>
+                <li><a id="menu_icon" class="invisible" href="/"><img src="/img/home_button.png" alter="메인"></a></li>
+                <li><a id="menu_icon" class="invisible" href="/camera"><img src="/img/camera.png"
+                            alter="촬영세팅"></a></li>
+                <li><a id="menu_icon" class="invisible" href="/shoot"><img src="/img/shoot.png" alter="촬영"></a></li>
+                <li><a id="menu_icon" class="invisible" href="/record"><img src="/img/album.png" alter="앨범"></a></li>
+                <li><a id="menu_icon" onclick="close_menu_event()" class="invisible" href="#"><img src="/img/left.png"
+                            alter="닫기"></a></li>
+            </ul>
+        </div> -->
+
+
+        <nav id="left_menu">
+            <!-- 좌측 바 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
+            <div id="clock_space" class="">
+                <span id="ampm">ampm</span>
+                <span id="clock">clock</span>
+                <span id="day"></span>
+            </div>
+        
+            <div id="icon_bar" class="">
+                <div id="icon1" class="icon">
+                    <img id="view_chart" class="icon_img" src="/img/view_chart_white.png">
+                    <p class="icon_text">차트 보기</p>
+                </div>
+                <div id="icon2" class="icon">
+                    <img id="user_scan" class="icon_img" src="/img/user_scan_white.png" href="/shoot">
+                    <p class="icon_text">새로 촬영</p>
+                </div>
+                <div id="icon3" class="icon">
+                    <img id="view_record" class="icon_img" src="/img/view_report_white.png">
+                    <p class="icon_text">기록 보기</p>
+                </div>
+            </div>
+            <img id="left_mark" class="left_hide" src="/img/left.png">
+            <img id="right_mark" class="right_see" src="/img/right.png">
+            <!-- 좌측 바 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
+        </nav>
+
+
+
+        <!-- 촬영본 사진 리스트 -->
+      
+
+    </section>
+
+    <div id = "section" class="shoot_camera_section">
+        <div id="shoot_div">
+            
+            <div id="wave" style=" position:absolute; opacity: 0;"></div>
+            <div id="wave2" style=" position:absolute; opacity: 0;"></div>
+            
+            <div>
+                <div id="botate" class="border-rotate"></div>
+                <canvas id="front_capture" class = "capture_canvas" style="border-style:dashed;"></canvas> 
+                <p class="direction_text">전</p>
+            </div>
+
+            <div>
+                <canvas id="right_capture" class = "capture_canvas" style="border-style:dashed;"></canvas>
+                <p class="direction_text">우</p>
+            </div>
+        
+            <div>
+                <canvas id="left_capture" class = "capture_canvas" style="border-style:dashed;"></canvas>
+                <p class="direction_text">후</p>
+            </div>
+
+            <div>
+                <canvas id="back_capture" class = "capture_canvas" style="border-style:dashed;"></canvas>
+                <p class="direction_text">좌</p>
+            </div>
+
+            
+        </div>
+
+        <div id="cam_div">
+            <div id="running_border">
+                <div id="r1" class="loading_rect"></div>
+                <div id="r2" class="loading_rect"></div>
+                <div id="r3" class="loading_rect"></div>
+                <div id="r4" class="loading_rect"></div>
+                <div id="r5" class="loading_rect"></div>
+                <div id="rect_center_line"></div>
+            </div>
+
+            <!-- style="border:3px solid black" -->
+            <img id="shoot_img" src="http://192.168.4.1:81/stream" crossorigin="anonymous">
+            <div id ="shutter_frame" class="shutter"></div>
+            
+            <canvas id="cam_canvas"></canvas>
+            <div id="now_rec">
+                <p>REC</p>
+            </div>
+            
+        </div>
+        
+        
+    </div>
+
+
+    <!-- 카메라 설정 -->
+    <div id="setting_space_backframe"></div>
+
+    <div id="setting_space">
+        <div id="setting_btn" class="setting_open">카메라</div>
+        <div id="setting_frame" class="">
+            <div id="setting_frame_zoom">
+                <div id="shootSetting">
+                    <!-- <h2>촬영 설정을 변경해주세요</h2> -->
+                    <div id="outerSettingBox">
+                        <div id="settingName">
+                            <p>밝기</p>
+                            <p>대비</p>
+                            <p>배율</p>
+                        </div>
+                    
+                        <div id="box">
+                            <div id = "bright_bar" class="seek-bar" draggable="true">
+                                <div id="circle_one" class="circle" draggable="true">
+                                    <span>0</span>
+                                </div>
+                            </div>
+                    
+                            <div id="color_contrast_bar" class="seek-bar" draggable="true">
+                                <div id="circle_two" class="circle" draggable="true">
+                                    <span>0</span>
+                                </div>
+                            </div>
+                    
+                            <div id="zoom_bar" class="seek-bar" draggable="true">
+                                <div id="circle_three" class="circle" draggable="true">
+                                    <span>1</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="imgBox">
+                        <a id="back" onclick="settingDefault()"><img src="/img/back2.png" alter="뒤로가기"></a>
+                    </div>
+                </div>
+            </div>
+
+            <div id="setting_frame_filter">
+                <!-- <span id="filter_title">필터 적용</span> -->
+                <canvas id="switching_img1" class="switching_img"> </canvas>
+                <canvas id="switching_img2" class="switching_img"> </canvas>
+                <canvas  id="switching_img3" class="switching_img"> </canvas>
+                <canvas  id="switching_img4" class="switching_img"> </canvas>
+                <canvas  id="switching_img5" class="switching_img"> </canvas>
+
+                <span id="img_title1" class="img_title">따뜻한톤</span>
+                <span id="img_title2" class="img_title">채도</span>
+                <span id="img_title3" class="img_title">원본</span>
+                <span id="img_title4" class="img_title">어둡게</span>
+                <span id="img_title5" class="img_title">차가운톤</span>
+            </div>
+        </div>
+    </div>
+    <!-- 카메라 설정 -->
+
+
+
+    <!-- 로딩 @#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
+    <div id="loading_frame">
+        <div id="loading_slide">
+            <div id="loading_img"></div>
+            <span id="tooltip" class=""></span>
+        </div>
+        <div id="progress_space">
+            <span class="loader"></span>
+            <div id="page_progress_bar" class="progress-container">
+                <div class="progress-text">촬영된 사진을 분석 중입니다...</div>
+                <div class="progress-bar">
+                    <div class="progress-text">촬영된 사진을 분석 중입니다...</div>
+                </div>
+            </div>
+        </div>
+    </div>
+<!-- 로딩@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
+
+
+    <!-- 촬영 이후 확인 -->
+    <div id="album_div" class="invisible">
+        <div id="img_group" >
+
+            <div id="frame_title">
+                <p id="frame_title_text">
+                    촬영한 사진을 확인하세요.
+                </p>
+            </div>
+            <div id="frame_front" class="frame_class">
+                <p id="text_front" class="text_class">앞</p>
+                <canvas id="album_front" class="img_class"></canvas>
+                
+            </div>
+            <div id="frame_left" class="frame_class">
+                <p id="text_left" class="text_class">좌</p>
+                <canvas id="album_left" class="img_class"></canvas>
+            </div>
+            <div id="frame_right" class="frame_class">
+                <p id="text_right" class="text_class">우</p>
+                <canvas id="album_right" class="img_class"></canvas>
+            </div>
+            <div id="frame_back" class="frame_class">
+                <p id="text_back" class="text_class">뒤</p>
+                <canvas id="album_back" class="img_class"></canvas>
+            </div>
+
+            <div id="frame_confirm" class="frame_class">
+                <div id="img_confirm" class="img_confirm_border">
+                    <div id="img_confirm_border" class="img_confirm_border">
+                        저장 및 분석
+                    </div>
+                </div>
+            </div>
+        
+            <div class="frame_line"></div>
+        </div>
+    </div>
+
+    <!-- 촬영 이후 확인 -->
+
+
+    <!-- 배경 웨이브 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
+    <div id="background_wave">
+        <canvas id="wave_canvas"></canvas>
+    </div>
+    <!-- 배경 웨이브 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
+    <!-- 촬영 중 파일 -->
+    <script src="/shoot_capture.js"></script>
+
+
+    <script src="/shoot_setting.js"></script>
+
+    <script src="/page_loading.js"></script>
+</body>
+
+<!-- 촬영 완료 후 이미지 확인 파일 -->
+<script src="/img_confirm.js"></script>
+</html>
