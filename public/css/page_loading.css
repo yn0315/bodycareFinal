@@ -305,3 +305,26 @@ body::-webkit-scrollbar-thumb {
 body::-webkit-scrollbar-track {
   background: rgba(248, 248, 248, 0.96);  /*스크롤바 뒷 배경 색상*/
 }
+
+
+
+@font-face
+{
+  font-family: 'GangwonEdu_OTFBoldA';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2201-2@1.0/GangwonEdu_OTFBoldA.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+input
+{
+  font-family: 'GangwonEdu_OTFBoldA';
+}
+input::placeholder
+{
+  font-family: 'GangwonEdu_OTFBoldA';
+}
+
+body
+{
+  font-family: 'GangwonEdu_OTFBoldA';
+}

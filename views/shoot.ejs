@@ -6,10 +6,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="Cache-Control" content="no-cache">
-
-    <title>Document</title>
-
-    <!-- <link rel="stylesheet" href="/css/main.css"> -->
+    <title>BodyCare</title>
+    
+    <link rel="icon" href="/img/main_icon.png" type="image/x-icon">
     <link rel="stylesheet" href="/css/shoot.css">
 
 
@@ -42,7 +41,6 @@
         sqlInput();
 
     </script>
-
     <section>
         <!-- 왼쪽 메뉴 -->
         <!-- <div id="menu" class="">
@@ -85,6 +83,20 @@
             <img id="left_mark" class="left_hide" src="/img/left.png">
             <img id="right_mark" class="right_see" src="/img/right.png">
             <!-- 좌측 바 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
+            
+            <div class="bottom_wave">
+                <div class="waveWrapper waveAnimation">
+                    <div class="waveWrapperInner bgTop">
+                    <div class="wave waveTop" style="background-image: url('http://front-end-noobs.com/jecko/img/wave-top.png')"></div>
+                    </div>
+                    <div class="waveWrapperInner bgMiddle">
+                    <div class="wave waveMiddle" style="background-image: url('http://front-end-noobs.com/jecko/img/wave-mid.png')"></div>
+                    </div>
+                    <div class="waveWrapperInner bgBottom">
+                    <div class="wave waveBottom" style="background-image: url('http://front-end-noobs.com/jecko/img/wave-bot.png')"></div>
+                    </div>
+                </div>
+            </div>
         </nav>
 
 
@@ -139,6 +151,8 @@
             <div id ="shutter_frame" class="shutter"></div>
             
             <canvas id="cam_canvas"></canvas>
+            
+            
             <div id="now_rec">
                 <p>REC</p>
             </div>
@@ -258,12 +272,25 @@
             </div>
 
             <div id="frame_confirm" class="frame_class">
+                <div id="inform">
+                    <div id="inform_input_frame" class="">
+                        <input id="inform_input" placeholder="kg" maxlength="3">
+                        <div id="inform_input_tail"></div>
+                    </div>
+        
+                    <div id="inform_space" class=""> 
+                        <img id="inform_icon" src="/img/warning.png">
+                        <span id="inform_message"> 촬영자 체중의 변화가 있나요?</span>
+                    </div>
+                </div>
+                
                 <div id="img_confirm" class="img_confirm_border">
                     <div id="img_confirm_border" class="img_confirm_border">
                         저장 및 분석
                     </div>
                 </div>
             </div>
+
         
             <div class="frame_line"></div>
         </div>

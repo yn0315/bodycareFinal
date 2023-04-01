@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src = "http://cdn.socket.io/4.5.0/socket.io.min.js"></script>
+    <link rel="stylesheet" href="page_viewrecord.css">
+    <link rel="icon" href="/img/main_icon.png" type="image/x-icon">
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <title>BodyCare</title>
+</head>
+
+<nav>
+    <!-- 좌측 바 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
+    <div id="clock_space" class="">
+        <span id="ampm">ampm</span>
+        <span id="clock">clock</span>
+        <span id="day"></span>
+    </div>
+
+    <div id="icon_bar" class="">
+        <div id="icon1" class="icon">
+            <img id="view_chart" class="icon_img" src="/img/view_chart_white.png">
+            <p class="icon_text">차트 보기</p>
+        </div>
+        <div id="icon2" class="icon">
+            <img id="user_scan" class="icon_img" src="/img/user_scan_white.png">
+            <p class="icon_text">새로 촬영</p>
+        </div>
+        <div id="icon3" class="icon">
+            <img id="view_record" class="icon_img" src="/img/view_report_white.png">
+            <p class="icon_text">기록 보기</p>
+        </div>
+    </div>
+    <img id="left_mark" class="left_hide" src="/img/left.png">
+    <img id="right_mark" class="right_see" src="/img/right.png">
+    <!-- 좌측 바 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
+    <div class="bottom_wave">
+        <div class="waveWrapper waveAnimation">
+            <div class="waveWrapperInner bgTop">
+              <div class="wave waveTop" style="background-image: url('http://front-end-noobs.com/jecko/img/wave-top.png')"></div>
+            </div>
+            <div class="waveWrapperInner bgMiddle">
+              <div class="wave waveMiddle" style="background-image: url('http://front-end-noobs.com/jecko/img/wave-mid.png')"></div>
+            </div>
+            <div class="waveWrapperInner bgBottom">
+              <div class="wave waveBottom" style="background-image: url('http://front-end-noobs.com/jecko/img/wave-bot.png')"></div>
+            </div>
+          </div>
+    </div>
+</nav>
+
+
+
+<body>
+    
+    <div id="space_total">
+        <div id="space_name" class="space_info">
+            <img src="/img/people.png" class="info_icon">
+            <span class="info_title">이름</span>
+            <span class="info_text">김OO</span>
+        </div>
+
+        <div id="space_age" class="space_info">
+            <img src="/img/age.png" class="info_icon">
+            <span class="info_title">나이</span>
+            <span class="info_text">25</span>
+        </div>
+
+        <div id="space_con" class="space_info">
+            <img src="/img/phone.png" class="info_icon">
+            <span class="info_title">연락처</span>
+            <span class="info_text">23958233</span>
+        </div>
+
+        <div id="space_hei" class="space_info">
+            <img src="/img/height.png" class="info_icon">
+            <span class="info_title">신장</span>
+            <span class="info_text">180</span>
+        </div>
+
+        <div id="space_wei" class="space_info">
+            <img src="/img/weight.png" class="info_icon">
+            <span class="info_title">체중</span>
+            <span class="info_text">63</span>
+        </div>
+
+        <div id="space_recent" class="space_info">
+            <img src="/img/view_record.png" class="info_icon">
+            <span class="info_title">최근 촬영일</span>
+            <span class="info_text">2023 03 27</span>
+        </div>
+
+        <div id="space_record_list" class="space_list">
+
+        </div>
+
+        <div id="space_record_data" class="space_data">
+
+            <span id="record_title" class="record_title"></span>
+
+            <div id="data_front" class="data_text">
+                <span class="data_title">정면 측정 데이터</span>   
+            </div>
+            
+            <div id="data_side" class="data_side">
+                <span class="data_title">측면 측정 데이터</span>
+            </div>
+
+            <div id="data_ratio" class="data_text">
+
+                <span class="data_title">데이터 가공 지표</span>
+
+                <div id="topratio_indicator" class="data_ratio_indicator">
+                    <div class="topratio_indicator_divide">
+                        <span id="hei_title" class="topratio_indicator_title">신장</span>
+                        <span class="topratio_indicator_stringtop">평균</span>
+                        <span id="hei_value" class="topratio_indicator_value">@@</span>
+                        <span class="topratio_indicator_stringpct">%</span>
+                    </div>
+                    <div class="topratio_indicator_divide">
+                        <span id="wei_title" class="topratio_indicator_title">체중</span>
+                        <span class="topratio_indicator_stringtop">평균</span>
+                        <span id="wei_value"  class="topratio_indicator_value">@@</span>
+                        <span class="topratio_indicator_stringpct">%</span>
+                    </div>
+                    <div class="topratio_indicator_divide">
+                        <span id="bmi_title" class="topratio_indicator_title">BMI</span>
+                        <span class="topratio_indicator_stringtop">평균</span>
+                        <span id="bmi_value" class="topratio_indicator_value">@@</span>
+                        <span class="topratio_indicator_stringpct">%</span>
+                    </div>
+                </div>
+                <div id="separate_line"></div>
+                <div id="parts_indicator" class="data_ratio_indicator">
+                    <div class="parts_indicator_divide">
+                        <span id="part_first_title" class="parts_indicator_title">어깨</span>
+                        <span id="part_first_value" class="parts_indicator_value">@@@</span>
+                    </div>
+                    <div class="parts_indicator_divide">
+                        <span id="part_second_title" class="parts_indicator_title">손목</span>
+                        <span id="part_second_value" class="parts_indicator_value">@@@</span>
+                    </div>
+                    <div class="parts_indicator_divide">
+                        <span id="part_third_title" class="parts_indicator_title">골반</span>
+                        <span id="part_third_value" class="parts_indicator_value">@@@</span>
+                    </div>
+                    <div class="parts_indicator_divide">
+                        <span id="part_fourth_title" class="parts_indicator_title">다리</span>
+                        <span id="part_fourth_value" class="parts_indicator_value">@@@</span>
+                    </div>
+                    <div class="parts_indicator_divide">
+                        <span id="part_fifth_title" class="parts_indicator_title">목</span>
+                        <span id="part_fifth_value" class="parts_indicator_value">@@@</span>
+                    </div>
+                </div>
+
+            </div>
+            <div id="data_img" class="data_img">
+                <span class="data_title">촬영 데이터</span>
+                <span id="title_origin" class="data_photo_title">원본</span>
+                <div class="data_photo">
+                    <img src="/img/invisible.png" class="slide_icon">
+                    <div id="normal_imgs" class="space_photo">
+                        <canvas id="f_can" class="canvas_photo"></canvas>
+                        <canvas id="r_can" class="canvas_photo"></canvas>
+                        <canvas id="l_can" class="canvas_photo"></canvas>
+                        <canvas id="b_can" class="canvas_photo"></canvas>
+                    </div>
+                    <img src="/img/invisible.png" class="slide_icon">
+                </div>
+                <span id="title_canny" class="data_photo_title">정면</span>
+                <div class="data_photo">
+                    <img src="/img/left.png" id="slide_left" class="slide_icon">
+                    <div class="space_photo">
+
+                        <div id="slide_1" class="">
+                            <canvas id="info_can_none" class="canvas_photo"></canvas>
+                            <div class="card_back"></div>
+                        </div>
+                        <div id="slide_2" class="">
+                            <canvas id="info_can_can"  class="canvas_photo"></canvas>
+                            <div class="card_back"></div>
+                        </div>
+                        <div id="slide_3" class="">
+                            <canvas id="info_can_con" class="canvas_photo"></canvas>
+                            <div class="card_back"></div>
+                        </div>
+                    </div>
+                    <img src="/img/right.png" id="slide_right" class="slide_icon">
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+
+
+    <!-- 배경 웨이브 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
+    <div id="background_wave">
+        <canvas id="wave_canvas"></canvas>
+    </div>
+    <!-- 배경 웨이브 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
+
+    <!-- 맨 위로 버튼 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
+    <div style="position:fixed;bottom:20px;right:15px;">
+        <img id="btn_top" class="btn_top_hide" src='/img/totop2.png' onmouseover="this.src='/img/totop2_over.png'"
+            onmouseout="this.src='/img/totop2.png'" alt="맨 위로">
+    </div>
+    <!-- 맨 위로 버튼 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
+    
+</body>
+
+
+<script src="page_viewrecord.js"></script>
+
+</html>

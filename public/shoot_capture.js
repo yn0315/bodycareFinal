@@ -44,7 +44,7 @@ const album_bcon = album_back.getContext('2d');
 // const arrow = getComputedStyle(left_arrow);
 const p_tag = document.getElementsByClassName("direction_text");
 
-
+document.body.style.overflow = "hidden";
 
 // p_tag[0].style.borderTop = "3px solid rgb(134, 101, 183)";
 class RotationCircle
@@ -590,17 +590,7 @@ socket.emit("backup_req", "백업데이터 요청");
 
 
 // [{'filter':filter},{'brightness':brightness},{"contrast":contrast},{"scale":scale}];
-socket.on("cam_setting_res", function(data)
-{
-    console.log("카메라 설정 응답");
-    console.log(data);
 
-    data.scale;
-
-    let set_values = [data.brightness, data.contrast, data.scale];
-    scale = data.scale;
-    settingValue = set_values;
-});
 
 
 socket.on("next_img", function(data)
@@ -615,6 +605,7 @@ socket.on("next_img", function(data)
 socket.on("light_on", function(data)
 {
     console.log(data);
+    
     rec.style.background = "linear-gradient(45deg, LawnGreen 50%, white)";
     setTimeout(function light_red()
     {
@@ -625,13 +616,14 @@ socket.on("light_on", function(data)
 let backup_count = 0;
 socket.on("backup_res", function(data)
 {
+    // console.log(data);
     let image_data = document.createElement("img");
     image_data.src = data;
 
     // document.body.appendChild(image_data);
     let data_img = new Image(100,100);
     data_img.src = data;
-
+    
 
     if(backup_count == 0)
     {
@@ -825,19 +817,20 @@ function position_obj(position)
         // botate.style.marginTop = "80px";
 
         // right_capture.style.border = "none";
-        key_check = true;
+        // key_check = true;
         p_tag[0].style.opacity = 0;
         draw_wave(wave,0, 3.7, 1.3);
-    
+        right_capture.style.border = now_border;
     }
     else if(position == 'right')
     {
         // botate.style.marginTop = "440px";
         // back_capture.style.border = "none";
-        key_check = true;
+        // key_check = true;
         p_tag[1].style.opacity = 0;
         draw_wave(wave,0, 25, 1.3);
         // target=29, target_t=16.7
+        left_capture.style.border = now_border;
     }
     else if(position == 'back')
     {
@@ -845,24 +838,32 @@ function position_obj(position)
         // botate.style.marginLeft = "10px";
         // botate.style.marginTop = "440px";
 
-        key_check = true;
+        // key_check = true;
         p_tag[2].style.opacity = 0;
         draw_wave(wave,0, 3.7, 24.5);
         // target_l=12.2, target_t=53
+        back_capture.style.border = now_border;
     }
     else if(position == 'left')
     {
         // left_capture.style.border = "none";
         // botate.style.marginLeft = "10px";
         // botate.style.marginTop = "440px";
-        key_check = true;
+        // key_check = true;
         p_tag[3].style.opacity = 0;
         draw_wave(wave,0, 25, 24.5);
         // target_l=29, target_t=53
     }
+    key_check = true;
 
 }
-
+// window.addEventListener('mousemove', function(e)
+// {
+//     let x= e.clientX;;
+//     let y = e.clientY;
+//     console.log(`x : ${x}`);
+//     console.log(`y : ${y}`);
+// })
 
 async function create_ani_canvas(page)
 {
@@ -902,15 +903,26 @@ async function create_ani_canvas(page)
     let marginL = 48;
     let marginT = 21;
 
-    ani_canvas.style.marginLeft = `${marginL}vw`;
-    ani_canvas.style.marginTop =  `${marginT}vh`;
 
+
+    // 돌리면서 발생하는 width의 차이
+    let nw = Number(now_cam_w.replace('px', ''));
+    let nh = Number(now_cam_h.replace('px', ''));
+
+
+    let w_dif = nw-nh;
+    let h_dif = nh-nw;
+
+    ani_canvas.style.marginLeft = `47.8%`;
+    ani_canvas.style.marginTop =  `10.3%`;
 
     ani_canvas.style.boxSizing="borer-box";
     ani_canvas.style.border = "3px solid black";
     let cam_filter = cam_canvas.style.filter;
     ani_canvas.style.filter = cam_filter;
     ani_canvas.style.transform = "rotate(90deg)";
+
+    
 
     let ani_con = ani_canvas.getContext('2d');
     ani_con.drawImage(cam_img,img_position(ani_canvas.width), img_position(ani_canvas.height), ani_canvas.width*scale, ani_canvas.height*scale);
@@ -921,6 +933,8 @@ async function create_ani_canvas(page)
     // document.body.appendChild(ani_canvas)
     // document.getElementById("cam_div").appendChild(ani_canvas);
     document.body.appendChild(ani_canvas);
+
+
     // section.appendChild(ani_canvas);
     // document.body.appendChild(ani_canvas);
     ani_canvas_arr.push(ani_canvas);
@@ -943,7 +957,7 @@ async function create_ani_canvas(page)
     {
         console.log('front move');
     
-        setTimeout(function move(target=12.2, target_t=16.7)
+        setTimeout(function move(target=11.3, target_t=16)
         {    
             ani_canvas.style.marginLeft = `${marginL-((mov*((marginL-target)/30)))}vw`;
             ani_canvas.style.marginTop = `${marginT-((mov*((marginT-target_t)/30)))}vh`;
@@ -971,7 +985,7 @@ async function create_ani_canvas(page)
     else if(page == 'right')
     {
         console.log('right move');
-        setTimeout(function rightmove(target=29, target_t=16.7)
+        setTimeout(function rightmove(target=28.5, target_t=16)
         {
             ani_canvas.style.marginLeft = `${marginL-((mov*((marginL-target)/30)))}vw`;
             ani_canvas.style.marginTop = `${marginT-((mov*((marginT-target_t)/30)))}vh`;
@@ -994,7 +1008,7 @@ async function create_ani_canvas(page)
     }
     else if(page == 'back')
     {
-        setTimeout(function backmove(target_l=12.2, target_t=53)
+        setTimeout(function backmove(target_l=11.3, target_t=52.8)
         {
             ani_canvas.style.marginLeft = `${marginL-((mov*((marginL-target_l)/30)))}vw`;
             ani_canvas.style.marginTop = `${marginT-((mov*((marginT-target_t)/30)))}vh`;
@@ -1017,7 +1031,7 @@ async function create_ani_canvas(page)
     }
     else if(page == 'left')
     {
-        setTimeout(function backmove(target_l=29, target_t=53)
+        setTimeout(function backmove(target_l=28.5, target_t=52.8)
         {
             ani_canvas.style.marginLeft = `${marginL-((mov*((marginL-target_l)/30)))}vw`;
             ani_canvas.style.marginTop = `${marginT-((mov*((marginT-target_t)/30)))}vh`;
@@ -1074,7 +1088,7 @@ function del_ani_canvas(ani_canvas)
 
 
 
-document.body.addEventListener('keyup', function(e)
+document.body.addEventListener('keyup', function cap(e)
 {
     console.log(e);
     // if(e.key == 'F5')
@@ -1150,46 +1164,43 @@ document.body.addEventListener('keyup', function(e)
             let image_data1 = front_capture.toDataURL();
 
             socket.emit('image_data', image_data1);
+            key_check = false;
+            setTimeout(function()
+            {
+                if(capture_count == 5)
+                {
+                    capture_count = 1;
+                    const $shoot_div = document.getElementById('shoot_div');
+                    const $img = document.getElementById('shoot_img');
+                    const setting_space = document.getElementById("setting_space");
+                    
+                    setting_space.style.display = "none";
+                    $shoot_div.style.display = "none";
+    
+                    cam_canvas.className = "invisible"
+                    
+                    $img.className = "invisible";
+                    rec.className = "invisible";
+                    frame.className = "invisible";
+                                    
+                    for(let i = 0; i < corner_arr.length; i++)
+                    {
+                        corner_arr[i].hidden_div();
+                    }
+                    for(let i = 0 ; i < ani_canvas_arr.length; i++)
+                    {
+                        ani_canvas_arr[i].className = "invisible";
+                    }
+
+                    document.body.removeEventListener('keyup', cap);
+    
+                    loading_run();
+    
+                    socket.emit("data_get_req", "front");
+                }
+            }, 3000);
         }
 
-        setTimeout(function()
-        {
-            if(capture_count == 5)
-            {
-                capture_count = 1;
-                const $shoot_div = document.getElementById('shoot_div');
-                const $img = document.getElementById('shoot_img');
-                const setting_space = document.getElementById("setting_space");
-                
-
-                setting_space.style.display = "none";
-                $shoot_div.style.display = "none";
-
-
-                cam_canvas.className = "invisible"
-                
-                $img.className = "invisible";
-                rec.className = "invisible";
-                frame.className = "invisible";
-                
-                
-                
-                for(let i = 0; i < corner_arr.length; i++)
-                {
-                    corner_arr[i].hidden_div();
-                }
-                for(let i = 0 ; i < ani_canvas_arr.length; i++)
-                {
-                    ani_canvas_arr[i].className = "invisible";
-                }
-
-
-
-                loading_run();
-
-                socket.emit("data_get_req", "front");
-            }
-        }, 6000);
 
         
     }
@@ -1325,7 +1336,9 @@ function loading_run()
 }
 
 
-    
-
 
  console.log("스크립트 읽힘");
+
+
+
+

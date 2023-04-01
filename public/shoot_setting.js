@@ -248,6 +248,8 @@ icons.forEach((n) =>
     });
     
 });
+
+
 function iconbar_page_change(icon_text)
 {
     console.log(icon_text.item(0).parentElement.id);
@@ -255,15 +257,21 @@ function iconbar_page_change(icon_text)
     if(icon_text.item(0).parentElement.id == 'icon1')
     {
         console.log("차트 보기로");
+        socket.emit("left_bar_click", "chart");
+
+        location.href = "http://192.168.0.47:3300/page_search";
         // location.href = "http://localhost:3300";
     }
     else if(icon_text.item(0).parentElement.id == "icon2")
     {
-        location.href = "http://localhost:3300/shoot";
+        socket.emit("left_bar_click", "cam");
+        location.href = "http://192.168.0.47:3300/page_search";
     }
     else if(icon_text.item(0).parentElement.id == "icon3")
     {
         console.log("기록 보기로");
+        socket.emit("left_bar_click", "log");
+        location.href = "http://192.168.0.47:3300/page_search";
         // location.href = "http://localhost:3300";
     }
 }
@@ -1164,7 +1172,7 @@ function barClick(x, y, barName) {
 }
 
 
-let settingValue = [0,0,1];
+var settingValue = [0,0,1];
 
 function dragElement(elmnt) 
 {
@@ -1425,14 +1433,65 @@ setTimeout(function send_setting()
 {
     //                                  밝기, 대비, 비율 순서
     let now_cam_filter = cam_canvas.style.filter
-    let set_save = [{"filter":now_cam_filter},{"slider_value":settingValue}]
+    let set_save = {"filter":now_cam_filter, "slider_value":settingValue}
     socket.emit("cam_setting_value_send", set_save);
     setTimeout(send_setting, 3000);
 }, 3000);
 
 
+socket.on("cam_setting_res", function(data)
+{
+    console.log("카메라 설정 응답");
+    console.log(data);
+
+    data.filter;
+    data.slider
+    
+    settingValue = data.slider;
+    cam_canvas.style.filter = data.filter;
+    // slider_setting();
+    // let set_values = [data.brightness, data.contrast, data.scale];
+    scale = data.slider[2];
+    // settingValue = set_values;
+
+    slider_control(bright_bar, bright_circle, data.slider[0]);
+    slider_control(color_contrast_bar, contrast_circle, data.slider[1]);
+    slider_control_zoom(data.slider[2]);
+    // slider_control(zoom_bar, zoom_circle, data.slider[2]);
+});
+
+function slider_control(bar = bright_bar, circle = bright_circle ,res_value)
+{
+    let w = Number(getComputedStyle(bar).width.replace('px',''));
+    circle.querySelector('span').innerText = res_value;
+    
+    
+    
+    let target_left = (w/100) * res_value;
+
+    circle.style.left = `${target_left}px`;
+    bar.style.background = `repeating-linear-gradient(to right, #663366 0, #663366 ${target_left}px, white ${target_left}px, white 250px)`;
+}
+function slider_control_zoom(res_value)
+{
+    let w = Number(getComputedStyle(zoom_bar).width.replace('px', ''));
+    let target = (res_value - 1) * (w);    
+    zoom_circle.querySelector('span').innerText = res_value;
+    zoom_circle.style.left = `${target}px`
+    zoom_bar.style.background = `repeating-linear-gradient(to right, #663366 0, #663366 ${target}px, white ${target}px, white 250px)`;
+
+}
 
 
+// 체중 변화 멘트
+const inform_input_frame = document.getElementById('inform_input_frame');
+const inform_space = document.getElementById('inform_space');
 
+let show_input_once = false;
+
+inform_space.addEventListener('mouseover', function()
+{
+    inform_input_frame.className = 'showme';
+});
 
 

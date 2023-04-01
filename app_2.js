@@ -1,4 +1,3 @@
-// 필요한 모듈을 가져옵니다.
 const net = require('net');
 const express = require('express');
 const http = require('http');
@@ -9,9 +8,9 @@ const bodyParser = require('body-parser');
 const cors = require("cors");
 
 const cv = require('opencv4nodejs');
-const { COLOR_BGR2GRAY } = require('opencv4nodejs');
-const posenet = require('@tensorflow-models/posenet');
-const tf = require('@tensorflow/tfjs-node');
+// const { COLOR_BGR2GRAY } = require('opencv4nodejs');
+// const posenet = require('@tensorflow-models/posenet');
+// const tf = require('@tensorflow/tfjs-node');
 const {ImageAnalyze} = require('./image_analyze');
 const {DbManager} = require('./database_management');
 
@@ -43,8 +42,6 @@ class BackUP
     {
         let data = this.que.shift();
         // console.log(data);
-
-
         // this.que.push(data);
         return data;
     }
@@ -236,7 +233,8 @@ class Capture
             let img_mat = this.capture_arr[i];
 
             let data = this.img_rotate(img_mat);
-            analyze.input_data(data);
+            let small_data = data.resize(100,80);
+            analyze.input_data(small_data);
             
         }
     }
@@ -382,40 +380,6 @@ var humanData = {};
 
 var frame = undefined;
 
-// const mysql = require('mysql');
-// const conn = {
-//     host : 'localhost',
-//     port : '3306',
-//     user : 'root',
-//     password : '0000',
-//     database : 'bodycare_db'
-// };
-
-
-// var connection = mysql.createConnection(conn); // DB 커넥션 생성
-// connection.connect();   // DB 접속
-
-
-// function name_filter(results)
-// {
-//     //    {name : '김OO', gen : "남자", age : "20세", con : "12436341"},
-
-//     let filter_arr = [];
-//     for(let i = 0 ; i < results.length; i++)
-//     {
-//         let people_dict = {};        
-//         people_dict['name'] = results[i].name;
-//         people_dict['gen'] = results[i].gen;
-//         people_dict['age'] = results[i].age;
-//         people_dict['con'] = results[i].tel;
-//         filter_arr.push(people_dict);
-//     }
-
-//     return filter_arr;
-
-// }
-
-// 웹 서버를 생성합니다.
 const app = express();
 const server = http.createServer(app);
 const io = socketIO(server);
@@ -431,6 +395,7 @@ app.use(cors({
     methods: '*', // 모든 메서드 허용
     allowedHeaders: '*' // 모든 헤더 허용
 }));
+
 app.use(function (req, res, next) {
     res.header("Access-Control-Allow-Origin", '*');
     res.header('Access-control-Allow-Headers', 'Origin, X-Requested-With,Content-Type,Accept');
@@ -470,6 +435,39 @@ app.get('/page_search', function(req, res)
         }
     })
 })
+app.get('/record', function(req,res)
+{
+    fs.readFile('public/page_viewrecord.html', function(err,data)
+    {
+        if(err)
+        {
+            console.log('get view record err');
+            console.log(err);
+        }
+        else
+        {
+            res.writeHead(200, {'Content-Type':'text/html'});
+            res.end(data);
+        }
+
+    })
+});
+app.get('/page_chart', function(req,res)
+{
+    fs.readFile('public/page_chart.html', function(err,data)
+    {
+        if(err)
+        {
+            console.log('get page chart 에러');
+            console.log(err);
+        }
+        else
+        {
+            res.writeHead(200, {'Content-Type':'text/html'});
+            res.end(data);
+        }
+    })
+});
 
 app.get("/new_info", function(req, res)
 {
@@ -490,17 +488,6 @@ app.get("/new_info", function(req, res)
 
 app.get('/camera', function(req,res)
 {
-    // const selectQuery = 'select * from bodycare_db.users';
-    // connection.query(selectQuery, function(err,results, fields)
-    // {
-    //     if(err)
-    //     {
-    //         console.log('/camera db에러');
-    //         console.log(err);
-    //     }
-    //     console.log(results);
-    //     // res.render('camera', {users:results});
-    // });
     fs.readFile('public/page_newinfo.html', function(err, data)
     {
         if(err)
@@ -537,70 +524,12 @@ app.get('/search',(req,res) => {
 })
 
 
-app.get('/chart', function(req,res)
-{
-    console.log(humanData);
 
 
-    if(Object.keys(humanData).length === 0)
-    {
-        console.log(humanData, "humanData");
-        res.redirect('/search');
-    }
-    else
-    {
-        fs.readFile('views/chart.ejs', function(error, data)
-        {
-            if(error)
-            {
-                console.log('/chart에러');
-                console.log(error);
-            }
-            else
-            {
-                res.writeHead(200, {'Content-Type':'text/html'});
-                res.end(data);
-            }
-    
-        });
-    }
-
-
-
-});
-
-app.get('/record', function(req, res)
-{
-    res.render('record', {data:humanData});
-});
-
-
-app.get('/record', function(req,res)
-{
-    const data = req.body;
-    console.log(data);
-    console.log('/recored');
-    if(req.query.data === null || req.query.data === 'undefined')
-    {
-        fs.readFile('views/record.ejs', function(error,data)
-        {
-            if(error)
-            {
-                console.log(error);
-            }
-            else
-            {
-                res.writeHead(200, {'Content-Type':'text/html'});
-                res.end(data);
-            }
-        });
-    }
-    else
-    {
-        let data = req.query.data;
-        res.render('record', {data:data});
-    }
-});
+// app.get('/record', function(req, res)
+// {
+//     // res.render('record', {data:humanData});
+// });
 
 app.post('/startshoot', function(req, res)
 {
@@ -762,35 +691,49 @@ var person = Object();
 var new_name = "";
 // Socket.io를 통해 클라이언트에서 받은 메시지를 ESP32-CAM에 전송합니다.
 
+// let setting_data = db.cam_setting_req();
+// console.log(setting_data);
 
 var now_page = "";
-var now_cam_slide_value = [];
-var now_cam_filter_value = "";
+var now_cam_slide_value = [0,0,1];
+var now_cam_filter_value = 'brightness(100%) contrast(100%)';
 var cam_setting_save_count = 0;
-// io.listen(3100,"localhost" ,function()
-// {
-//     console.log("io listen");
-// })
-
-// io.listen()
+var now_human = {};
+// 선택 정보 {name , gen, age , tel}
+var next_page=""; // 다음으로 넘겨줄 페이지
+var select_date = ''; //선택한 기록정보
 
 io.on('connection', function(socket)
 {
-    console.log("socket CONNECTION !");
+    console.log("socket CONNECTION !" + socket);
     console.log('Client connected');
+
+    socket.on('page_start', function(data)
+    {
+        console.log(data);
+    });
     
     cam_setting_save_count = 0;
     // 필터 저장 카운트 초기화
 
-
+    socket.on('left_bar_click', function(data)
+    {
+        //좌측 바 클릭
+        console.log(data+" 클릭함");
+        next_page = data;
+    });
     // var person = new Person_pose("name");
     //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
     //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
     //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
     //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 새로촬영- 검색페이지
+    socket.on("next_page_info_req", function(data)
+    {
+        socket.emit('next_page_info_res', next_page);
+    });
     socket.on('page_name_search', function(data)
     {
-        // 새로촬영 - 이름 검색 페이지 진입
+        // 이름 검색 페이지 진입
         console.log(data);
         now_page = "page_search";
     });
@@ -798,29 +741,8 @@ io.on('connection', function(socket)
     socket.on("name_saerch_req", function(data)
     {
         new_name = data;
-        
         db.name_search_req(data, socket);
         // 이름 검색 후 엔터
-        // console.log("이름검색요청");
-        // console.log(data);
-        
-        // // const selectQuery = `select * from bodycare_db.users where name like '%${data}%'`;
-
-        // const selectQuery = `select name, gen, age, tel from bodycare_db.users where name='${data}'`;
-        // //    {name : '김OO', gen : "남자", age : "20세", con : "12436341"},
-        // connection.query(selectQuery, function(err,results, fields)
-        // {
-        //     if(err)
-        //     {
-        //         console.log('이름검색 db에러');
-        //         console.log(err);
-        //     }
-            
-        //     // console.log("결과");
-        //     // console.log(results);  
-        //     let name_data = name_filter(results);
-        //     socket.emit("search_result", name_data);
-        // });
     });
 
 
@@ -828,25 +750,151 @@ io.on('connection', function(socket)
     {
         console.log("page_search, 선택 정보");
         console.log(data);
+        now_human = data;
     });
 
-    // socket.on("new_info_name_value", function(data)
-    // {
-    //     console.log("등록할 이름");
-    //     console.log(data);
-    //     new_name = data;
-    // });
+    socket.on('log_confirm_req', function(data)
+    {
+        console.log(data);
+        // 기록 존재 유무 판단
+        db.log_confirm_req(now_human.tel, socket);
+
+    })
+
+
+
 
     //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
     //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
     //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-    //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 새로촬영- 검색페이지
+    //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 검색페이지
+
+
+    //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+    //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+    //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+    //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 기록확인 페이지
+
+
+    socket.on("page_record", function(data)
+    {
+        console.log(data)
+        console.log("recorde 페이지 진입")
+        now_page = "page_viewrecord";
+
+    })
+    socket.on('person_info_req', function(data)
+    {
+        console.log("recorde 정보 요청");
+        // var now_human = {};
+        // 선택 정보 {name , gen, age , tel}
+
+        db.person_info_req(now_human.tel, socket);
+    });
+
+    socket.on('person_log_data_req', function(data)
+    {
+        console.log("date 정보 요청");
+        db.person_date_info_req(now_human.tel, socket);
+    });
+    socket.on('next_show_req', function(data)
+    {
+        // 다음페이지가 차트인지 기록조회 상세보기인지 판단
+        console.log('확인');
+        console.log(next_page);
+        socket.emit("next_show_res", next_page);
+    });
+
+
+    socket.on('detail_log_req', function(data)
+    {
+        // 해당 날짜의 기록 요청
+        db.log_table_search(now_human.tel, data, socket);
+
+    });
+
+    socket.on('age_bmi_req', function(data)
+    {
+        // bmi 비율 요청 data 는 나이대
+        db.age_bmi_select_req(data, socket);
+    });
+
+
+
+    //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+    //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+    //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+    //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 기록확인 페이지
+
+
+    //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+    //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+    //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+    //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 차트조회 페이지
+    socket.on('chart_log_req', function(data)
+    {
+        console.log('선택 받은 데이터');
+        console.log(data);
+        select_date = data;
+    })
+
+    socket.on('page_chart', function(data)
+    {
+        console.log('차트 페이지 진입');
+        console.log(data);
+    })
+
+    socket.on('chart_person_info_req', function(data)
+    {
+        console.log(data+'요청');
+        console.log(now_human);
+
+
+        db.chart_person_info_req(now_human.tel, socket);
+
+    })
+
+    socket.on('chart_bmi_req', function(data)
+    {
+        console.log('bmi 데이터 요청');
+        console.log(data);
+
+        db.chart_bmi_req(data, socket);
+
+    });
+
+    socket.on('chart_log_data_req', function(data)
+    {
+        console.log("최근 5개 기록 요청");
+
+        db.chart_log_req_five(now_human.tel, socket);
+
+    });
+
+    socket.on('chart_balance_req', function(data)
+    {
+        console.log(data);
+        // 어깨 손목 골반 다리 목 지표 요청
+
+        db.chart_valance_req(now_human.tel, select_date, socket);
+
+
+    });
+    socket.on('chart_cloud_req', function(data)
+    {
+        console.log(data);
+        console.log(select_date);
+        db.chart_cloud_req(now_human,select_date, socket);
+
+    });
+
+
+
 
     //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
     //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
     //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
     //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 신규 등록 페이지
-
 
 
     socket.on("new_info_page", function(data)
@@ -866,63 +914,17 @@ io.on('connection', function(socket)
     {
         console.log("등록 요청");
         console.log(data);
-        
+        now_human.name = data.name;
+        now_human.wei = data.wei;
+        now_human.tel = data.con;
         // let tel_num = data.con;
         db.new_input_req(data, socket);
-
-
-        // const selectQuery = `select tel from bodycare_db.users where tel='${tel_num}'`;
-        // //    {name : '김OO', gen : "남자", age : "20세", con : "12436341"},
-        // connection.query(selectQuery, function(err,results, fields)
-        // {
-        //     if(err)
-        //     {
-        //         console.log('신규등록 번호 중복 확인 db에러');
-        //         console.log(err);
-        //     }
-            
-        //     console.log(results);
-            
-        //     if(results.length == 0)
-        //     {
-        //         //등록가능
-        //         // tel  name  age   gen   height   weight
-        //         let update_query = `insert into bodycare_db.users values ('${data.con}','${data.name}','${data.age}', '${data.gen}', '${data.hei}', '${data.wei}')`;
-        //         connection.query(update_query, function(err, results, fields)
-        //         {
-        //             if(err)
-        //             {
-        //                 console.log("신규등록 db에러");
-        //                 console.log(err);
-        //             }
-        //             else
-        //             {
-        //                 console.log(results);
-
-        //                 socket.emit("new_input_res", "success_input")
-        //             }
-        //         });
-        //     }
-        //     else
-        //     {
-        //         socket.emit("new_input_res", "fail_input");
-        //     }
-            
-        // });
-
-
-    })
+    });
 
     //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
     //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
     //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
     //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 신규 등록 페이지
-
-
-
-
-    
-
 
 
     //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
@@ -933,57 +935,37 @@ io.on('connection', function(socket)
     socket.on('shoot_page', function(data)
     {
         now_person = true;
+        now_page = "shoot_page";
         person = new Person_pose("name");
 
         console.log(data);
     });
-
+    
     socket.on("cam_setting_value_send", function(data)
     {
         // console.log(data);
 
         // 아래처럼 꺼내면 됨
         
-        // console.log(data[0].filter);
-        // console.log(data[1].slider_value);
-        now_cam_filter_value = data[0].filter;
-        now_cam_slide_value = data[1].slider_value;
+        // console.log(data);
+        
+        now_cam_filter_value = data.filter;
+        now_cam_slide_value = data.slider_value;
+
+        cam_setting_save_count ++;
+        if(now_page != 'shoot_page' || cam_setting_save_count > 30)
+        {
+            cam_setting_save_count = 0;
+            console.log("다른 페이지 이동 or 일정시간 지남");
+            db.cam_setting_save(data);
+        }
     });
+
+
     socket.on("cam_setting_req", function(data)
     {
-
-        db.cam_setting_req(socket);
-
-
-
-        // let call_set_query = `select * from bodycare_db.cam_setting`;
-        // connection.query(call_set_query,function(err, results, fields)
-        // {
-        //     if(err)
-        //     {
-        //         console.log(err);
-        //         console.log("cam_setting select 에러");
-        //     }
-        //     else
-        //     {
-        //         try
-        //         {
-        //             let filter = results[0].cam_filter;
-        //             let brightness = results[0].brightness;
-        //             let contrast = results[0].contrast;
-        //             let scale = results[0].scale;
-
-        //             let cam_setting_arr = [{'filter':filter},{'brightness':brightness},{"contrast":contrast},{"scale":scale}];
-        //             socket.emit("cam_setting_res", cam_setting_arr);
-        //         }   
-        //         catch
-        //         {
-        //             console.log("cam_setting 조회 에러");
-        //         }
-                
-        //     }
-        // })
-        // console.log(data);
+        let cam_setting = {'filter':now_cam_filter_value, 'slider':now_cam_slide_value};
+        socket.emit("cam_setting_res", cam_setting);
 
         // 카메라 세팅 요청
     })
@@ -1033,7 +1015,7 @@ io.on('connection', function(socket)
 
     socket.on('image_data', function(image_data1)
     {
-
+        
         const img = cv.imdecode(Buffer.from(image_data1.split(',')[1],'base64'));
         // cv.imshowWait("ok", img);
         // console.log(img.sizes);
@@ -1043,7 +1025,7 @@ io.on('connection', function(socket)
             socket.emit('input_data_complite', "수집완료");
             console.log("input_data_complite 10장 수집완료");
             capture_count = 0;
-            client.write('green');
+            // client.write('green');
 
         }
         else
@@ -1132,13 +1114,13 @@ io.on('connection', function(socket)
             
             socket.emit("complite_data", 'back');
 
-            db.input_result_data_save(total_result,'11111111');
+            db.input_result_data_save(total_result,now_human.tel, now_human.wei);
 
             backup.backup_reset();
+            console.log(now_human);
         }
     
     });
-
 
 
     socket.on("data_get_req", function(data)
@@ -1165,12 +1147,7 @@ io.on('connection', function(socket)
         }
 
         time_check(socket, data);
-
-
-
     });
-
-
 
     socket.on("cpature_page", function(data)
     {
@@ -1197,8 +1174,46 @@ io.on('connection', function(socket)
         }
     });
 
-        //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 촬영 진행페이지
 
+    socket.on('kg_change_req', function(data)
+    {
+        // 몸무게 변경
+
+        //가장 최근 기록의  몸무게 값만 변경
+        console.log(data);
+        if(data.length > 0)
+        {
+            let ndata = Number(data);
+            console.log(ndata);
+            console.log(typeof(ndata));
+            if(ndata == NaN)
+            {
+                console.log("오긴오냐?");
+            }
+            else if(ndata != NaN && ndata != undefined)
+            {
+                db.member_wei_change(now_human.tel, ndata, socket);
+            }
+            else
+            {
+                socket.emit("wei_is_number", '숫자만 입력');
+            }
+            
+
+        }
+        else
+        {
+            //변경 안함
+            socket.emit('kg_change_res', '변경 안함');
+        }
+
+    });
+
+    //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+    //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+    //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+    //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 촬영진행페이지
+    
   
 });
 

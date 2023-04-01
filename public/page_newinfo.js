@@ -28,7 +28,6 @@ socket.emit("new_info_page", "등록페이지 진입");
 socket.emit("new_name_req", "등록하는이름 요청");
 socket.on("new_name_res", function(res_data)
 {
-    
     console.log(res_data);
     if(res_data == "")
     {
@@ -41,7 +40,7 @@ socket.on("new_input_res", function(data)
 {
     if(data == 'success_input')
     {
-        location.href = "http://localhost:3300/shoot";
+        location.href = "http://192.168.0.47:3300/shoot";
     }
     else if(data == 'fail_input')
     {
@@ -311,17 +310,22 @@ function iconbar_page_change(icon_text)
     // icon_text.item(0)
     if(icon_text.item(0).parentElement.id == 'icon1')
     {
+        // 192.168.0.47
         console.log("차트 보기로");
-        // location.href = "http://localhost:3300";
+        socket.emit("left_bar_click", "chart");
+
+        location.href = "http://192.168.0.47:3300/page_search";
     }
     else if(icon_text.item(0).parentElement.id == "icon2")
     {
-        location.href = "http://localhost:3300/shoot";
+        socket.emit("left_bar_click", "cam");
+        location.href = "http://192.168.0.47:3300/page_search";
     }
     else if(icon_text.item(0).parentElement.id == "icon3")
     {
         console.log("기록 보기로");
-        // location.href = "http://localhost:3300";
+        socket.emit("left_bar_click", "log");
+        location.href = "http://192.168.0.47:3300/page_search";
     }
 }
 
@@ -729,7 +733,7 @@ class WaveGroup
 
 const info_input = document.getElementById('info_input');
 const warn_message = document.getElementById('warn_message');
-
+info_input.focus();
 info_input.addEventListener('keydown', function(e)
 {
     // step1 성별 입력
@@ -792,16 +796,28 @@ window.addEventListener('keyup', function(event)
             // step1 성별
             if (step == 1)
             {
-                step_animation(progress_bar, border_gen, icon_gen, progress_location[0], progress_location[1]);
-                info_input.value = '';
-                info_gen.innerText = text;
-                change_text(info_text, '나이를 입력해주세요.');
-                info_input.placeholder = '나이(세)';
-                info_input.maxLength = 2;
+                if(text.includes('남') || text.includes('여'))
+                {                
+                    step_animation(progress_bar, border_gen, icon_gen, progress_location[0], progress_location[1]);
+                    info_input.value = '';
+                    info_gen.innerText = text;
+                    change_text(info_text, '나이를 입력해주세요.');
+                    info_input.placeholder = '나이(세)';
+                    info_input.maxLength = 2;
+                }
+                else
+                {
+                    warn_display('남자 혹은 여자로 성별에 맞게 입력해주세요.');
+                    play_once = false;
+                    info_input.value = '';
+                }
+                
             }
             // step2 나이
             else if (step == 2)
             {
+                
+               
                 // age_dict['age'] = info_input.value;
                 step_animation(progress_bar, border_age, icon_age, progress_location[1], progress_location[2]);
                 info_input.value = '';
@@ -810,11 +826,14 @@ window.addEventListener('keyup', function(event)
     
                 info_input.placeholder = 'cm';
                 info_input.maxLength = 3;
+                
             }
             // step3 신장
             else if (step == 3)
             {   
-                if (text.length == 3)
+                let hei = Number(text);
+
+                if (text.length == 3 && hei <= 250)
                 {
                     // hei_dict['hei'] = info_input.value;
                     step_animation(progress_bar, border_hei, icon_hei, progress_location[2], progress_location[3]);
@@ -829,20 +848,34 @@ window.addEventListener('keyup', function(event)
                     console.log('신장 자리수 부족');
                     warn_display('신장 자리수에 맞게 입력해주세요.');
                     play_once = false;
+                    info_input.value = '';
+
                 }
             }
             // step4 체중
             else if (step == 4)
             {
+                let wei = Number(text);
+
                 if (text.length == 2 || text.length == 3)
                 {
-                    // wei_dict['wei'] = info_input.value;
-                    step_animation(progress_bar, border_wei, icon_wei, progress_location[3], progress_location[4]);
-                    info_input.value = '';
-                    info_wei.innerText = `${text}kg`;
-                    change_text(info_text, '연락처를 입력해주세요.');
-                    info_input.placeholder = '- 없이 8자리';
-                    info_input.maxLength = 8;
+                    if(wei < 220)
+                    {
+// wei_dict['wei'] = info_input.value;
+                        step_animation(progress_bar, border_wei, icon_wei, progress_location[3], progress_location[4]);
+                        info_input.value = '';
+                        info_wei.innerText = `${text}kg`;
+                        change_text(info_text, '연락처를 입력해주세요.');
+                        info_input.placeholder = '- 없이 8자리';
+                        info_input.maxLength = 8;
+                    }
+                    else
+                    {
+                        warn_display('체중을 다시 확인해 주세요');
+                        play_once = false;
+                        info_input.value = '';
+                    }
+                    
                 }
                 else
                 {

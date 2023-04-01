@@ -508,6 +508,7 @@ class ImageAnalyze
         console.log("정면 분석 시작");
 
         const img = this.normal_img.copy();
+        const normal_img = this.normal_img.copy();
         cv.imwrite('front_normal.jpg', img);
         const grayimg = this.normal_img.cvtColor(COLOR_BGR2GRAY);
         cv.imwrite('front_togray.jpg', grayimg);
@@ -642,7 +643,9 @@ class ImageAnalyze
         //     {Body_ratio : result}]
         console.log(body_return);
         console.log(body_return.Lowerbody);
-        
+        let nor = cv.imencode('.png',normal_img).toString('base64');
+        let can = cv.imencode('.png', can_img).toString('base64');
+        let con = cv.imencode('.png', img).toString('base64');
         let front_result = {
             'F_left_arm' : left_arm_length,
             'F_right_arm' : right_arm_length,
@@ -653,7 +656,9 @@ class ImageAnalyze
             'F_upperbody' : body_return.Upperbody,
             'F_lowerbody' : body_return.Lowerbody,
             'F_body_ratio' : body_return.Body_ratio,
-            'F_normal_img' : Buffer.from(img.getData().buffer)
+            'F_normal_img' : nor,
+            'F_canny_img' : can,
+            'F_con_img' : con
         }
         
         cv.imwrite("front_tensor.jpg", img);
@@ -666,6 +671,7 @@ class ImageAnalyze
         console.log("좌측 분석 시작");
 
         const img = this.normal_img.copy();
+        const normal_img = this.normal_img.copy();
         cv.imwrite('left_normal.jpg', img);
         const grayimg = this.normal_img.cvtColor(COLOR_BGR2GRAY);
         cv.imwrite('left_togray.jpg', grayimg);
@@ -771,10 +777,17 @@ class ImageAnalyze
             lr += 1;
         });
         cv.imwrite('left_result_img.jpg', zero_img);
+
+        let nor = cv.imencode('.png',normal_img).toString('base64');
+        let can = cv.imencode('.png', can_img).toString('base64');
+        let con = cv.imencode('.png', img).toString('base64');
+
         let left_result = {
             'ear_to_sholder' : ear_to_sholder,
             'ear_to_sholder_length' :les_length,
-            'left_normal_img' : Buffer.from(img.getData().buffer)
+            'left_normal_img' : nor,
+            'left_canny_img' : can,
+            'left_con_img' : con
         }
         return left_result;
 
@@ -785,13 +798,13 @@ class ImageAnalyze
     {
         console.log("우측분석 시작");
         const img = this.normal_img.copy();
+        const normal_img = this.normal_img.copy();
         cv.imwrite('right_normal.jpg', img);
         const grayimg = this.normal_img.cvtColor(COLOR_BGR2GRAY);
         cv.imwrite('right_togray.jpg', grayimg);
         const can_img = grayimg.canny(80,80,3,false);
         cv.imwrite('right_drawcanny.jpg', can_img);
         const contours = can_img.findContours(cv.RETR_EXTERNAL, cv.CHAIN_APPROX_SIMPLE, new cv.Point2(0, 0));
-
 
         let arr = [];
         for (let i = 0; i < contours.length; i++)
@@ -900,12 +913,16 @@ class ImageAnalyze
         });
 
 
-
+        let nor = cv.imencode('.png',normal_img).toString('base64');
+        let can = cv.imencode('.png', can_img).toString('base64');
+        let con = cv.imencode('.png', img).toString('base64');
 
         let right_result = {
             'ear_to_sholder' : ear_to_sholder,
             'ear_to_sholder_length' : res_length,
-            'right_normal_img' : Buffer.from(img.getData().buffer)
+            'right_normal_img' : nor,
+            'right_canny_img' : can,
+            'right_con_img' : con
         }
 
         return right_result;
@@ -916,6 +933,7 @@ class ImageAnalyze
         console.log("후면분석 시작");
 
         const img = this.normal_img.copy();
+        const normal_img = this.normal_img.copy();
         cv.imwrite('back_normal.jpg', img);
         const grayimg = this.normal_img.cvtColor(COLOR_BGR2GRAY);
         cv.imwrite('back_togray.jpg', grayimg);
@@ -1067,7 +1085,9 @@ class ImageAnalyze
         //     'F_lowerbody' : body_return.Lowerbody,
         //     'F_body_ratio' : body_return.Body_ratio
         // }
-        
+        let nor = cv.imencode('.png',normal_img).toString('base64');
+        let can = cv.imencode('.png', can_img).toString('base64');
+        let con = cv.imencode('.png', img).toString('base64');
 
         let back_result = {
             'B_left_arm' : left_arm_length,
@@ -1079,11 +1099,14 @@ class ImageAnalyze
             'B_upperbody' : body_return.Upperbody,
             'B_lowerbody' : body_return.Lowerbody,
             'B_body_ratio' : body_return.Body_ratio,
-            'B_normal_img' : Buffer.from(img.getData().buffer)
+            'B_normal_img' : nor,
+            'B_canny_img' : can,
+            'B_con_img' : con
         }
 
         // img.getData()
         // Buffer.from(img.getData());
+        // console.log(back_result.B_normal_img);
 
         return back_result;
     }
@@ -1359,9 +1382,6 @@ class ImageAnalyze
         
         return result_length;
     }
-
-
-
 
     body_ratio(ls=new cv.Point2(0,0), rs=new cv.Point2(0,0)
     , lh=new cv.Point2(0,0), rh=new cv.Point2(0,0),

@@ -2,7 +2,55 @@ var socket = io();
 
 
 socket.emit("page_name_search", "page_search진입");
+socket.emit("next_page_info_req", "다음 페이지 요청");
+socket.on('next_page_info_res', function(data)
+{
+    console.log("다음으로 넘겨줄 페이지는");
+    console.log(data);
+    next_location(data);
+})
+socket.on('log_confirm_res', function(data)
+{
+    if(data == 'true')
+    {
+        location.href = next_page_location;
+    }
+    else if(data == 'none')
+    {
+        console.log('이름 검색으로 돌아가기');
+        let get_results = search_results.querySelectorAll('.test_result, .test_result_over');
+        spread_below(get_results, true);
+        return_search_name();
+        search_input.focus();
+    }
+    
+})
+//192.168.0.47:3300
+var next_page_location="http://192.168.0.47:3300";
+var title_inner_text = "";
+function next_location(data)
+{
+    if(data == 'cam')
+    {
+        search_text.innerText = '촬영될 사람의 이름을 입력해주세요.';
+        title_inner_text ='촬영될 사람의 이름을 입력해주세요.';
+        next_page_location = "http://192.168.0.47:3300/shoot"
+    }
+    else if(data == 'chart')
+    {
+        search_text.innerText = '차트를 확인할 사람의 이름을 입력해주세요.';
+        title_inner_text ='차트를 확인할 사람의 이름을 입력해주세요.';
+        next_page_location = "http://192.168.0.47:3300/record"
+    }
+    else if(data == 'log')
+    {
+        search_text.innerText = '기록을 확인할 사람의 이름을 입력해주세요.';
+        title_inner_text ='기록을 확인할 사람의 이름을 입력해주세요.';
+        next_page_location = "http://192.168.0.47:3300/record"
+    }
+    
 
+}
 
 // 뒤로가기 감지 초기화
 window.onpageshow = function(event)
@@ -105,7 +153,8 @@ window.addEventListener("scroll", hide_top_btn);
 function hide_top_btn ()
 {
     const currentScrollPosition = window.pageYOffset;
-    if (currentScrollPosition > 50)
+    console.log(currentScrollPosition);
+    if (currentScrollPosition > 5)
     {
         btnTop.style.display = "block";
     }
@@ -307,16 +356,20 @@ function iconbar_page_change(icon_text)
     if(icon_text.item(0).parentElement.id == 'icon1')
     {
         console.log("차트 보기로");
+        socket.emit("left_bar_click", "chart");
+        location.href = "http://192.168.0.47:3300/page_search";
         // location.href = "http://localhost:3300";
     }
     else if(icon_text.item(0).parentElement.id == "icon2")
     {
-        location.href = "http://localhost:3300/shoot";
+        socket.emit("left_bar_click", "cam");
+        location.href = "http://192.168.0.47:3300/page_search";
     }
     else if(icon_text.item(0).parentElement.id == "icon3")
     {
         console.log("기록 보기로");
-        // location.href = "http://localhost:3300";
+        socket.emit("left_bar_click", "log");
+        location.href = "http://192.168.0.47:3300/page_search";
     }
 }
 
@@ -459,8 +512,14 @@ left_btn.addEventListener("click", function ()
 });
 
 // @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 맨 위로 버튼
-btnTop.addEventListener("mouseover", function (){document.body.style.cursor = "pointer";});
-btnTop.addEventListener("mouseout", function (){document.body.style.cursor = "auto";});
+btnTop.addEventListener("mouseover", function ()
+{
+    document.body.style.cursor = "pointer";
+});
+btnTop.addEventListener("mouseout", function ()
+{
+    document.body.style.cursor = "auto";
+});
 
 btnTop.addEventListener("click", function ()
 {
@@ -520,10 +579,6 @@ function isOverlap(child, siblings)
     }
     return false;
 }
-
-
-
-
 // @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 배경 웨이브 start
 
 class create_wave
@@ -915,7 +970,7 @@ function return_search_name()
             }
             else if (i == 50)
             {
-                search_text.innerText = '촬영될 사람의 이름을 입력해주세요.';
+                search_text.innerText = title_inner_text;
                 search_input.value = '';
                 search_input.placeholder = '이름 검색';
             }
@@ -1176,19 +1231,25 @@ function set_keyboard_event()
                                 let add = add_new_info.querySelector('.item_add').innerText;
                                 console.log("새 정보 입력으로");
                                 console.log(add);
-                                location.href = "http://localhost:3300/new_info";
-                                
-                                // socket.emit("new_info_name_value",input_name);
-                                
+                                location.href = "http://192.168.0.47:3300/new_info";
+                                                                
                                 // "http://localhost:3300/page_search"
                             }
                             else
                             {
                                 const get_values = get_childs[key_index_current];
+
+                                let now_name = document.getElementById("search_text").innerText;
                                 let gen = get_values.querySelector('.item_gen').innerText;
                                 let age = get_values.querySelector('.item_age').innerText;
                                 let con = get_values.querySelector('.item_con').innerText;
-                                console.log(`성별 : ${gen}, 나이 : ${age}, 연락처 : ${con}`);
+                                console.log('선택한 정보 갖고 넘어가기');
+                                console.log(`이름: ${now_name}성별 : ${gen}, 나이 : ${age}, 연락처 : ${con}`);
+                                let select_arr = {"name": now_name , "gen":gen,"age":age,"tel":con};
+                                socket.emit("page_search_select_info", select_arr);
+                                
+                                socket.emit('log_confirm_req', '기록 존재 유무 확인');
+
                             }
                         }
                     }
@@ -1270,9 +1331,8 @@ function set_mouse_event(element)
                 let add = element.querySelector('.item_add').innerText;
 
                 console.log('새 정보 입력으로');
-                // socket.emit("new_info_name_value",input_name);
 
-                location.href = "http://localhost:3300/new_info";
+                location.href = "http://192.168.0.47:3300/new_info";
             }
             else
             {
@@ -1282,8 +1342,11 @@ function set_mouse_event(element)
                 let con = element.querySelector('.item_con').innerText;
                 console.log('선택한 정보 갖고 넘어가기');
                 console.log(`이름: ${now_name}성별 : ${gen}, 나이 : ${age}, 연락처 : ${con}`);
-                let select_arr = [{"name": now_name},{"gen":gen},{"age":age},{"tel":con}];
+                let select_arr = {"name": now_name , "gen":gen,"age":age,"tel":con};
                 socket.emit("page_search_select_info", select_arr);
+
+                socket.emit('log_confirm_req', '기록 존재 유무 확인');
+                
             }
         }
     });

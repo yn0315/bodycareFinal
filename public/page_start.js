@@ -1,3 +1,8 @@
+var socket = io();
+
+
+socket.emit('page_start', 'start_page 진입');
+
 let doing_anima = false;
 let menu_status = 'close';
 let max = 80;
@@ -150,19 +155,31 @@ function hide_first_page(event)
     }, 550);
     setTimeout(function()
     {
-        if (parent.id == 'coverpage_1') {
-            location.href = "http://localhost:3300/page_search";
+        // localhost
+        // 192.168.0.47
+        if (parent.id == 'coverpage_1')
+        {
+            // 새로촬영
+            socket.emit('left_bar_click', 'cam');
+            location.href = "http://192.168.0.47:3300/page_search";
             localStorage.removeItem('넘어갈화면');
             localStorage.setItem('넘어갈화면', '/page_search');
         }
-        else if (parent.id == 'coverpage_2') {
-    
-            location.href = "http://localhost:3300/chart";
+        else if (parent.id == 'coverpage_2')
+        {
+            // 차트조회
+            socket.emit("left_bar_click", "chart");
+
+            location.href = "http://192.168.0.47:3300/page_search";
             localStorage.removeItem('넘어갈화면');
             localStorage.setItem('넘어갈화면', '/chart');
         }
-        else if (parent.id == 'coverpage_3') {
-            location.href = "http://localhost:3300/record";
+        else if (parent.id == 'coverpage_3')
+        {
+            // 기록조회
+            socket.emit("left_bar_click", "log");
+
+            location.href = "http://192.168.0.47:3300/page_search";
             localStorage.removeItem('넘어갈화면');
             localStorage.setItem('넘어갈화면', '/record');
         }

@@ -9,9 +9,49 @@ get_img_confirm.addEventListener("mouseout", function (){
     document.body.style.cursor = "auto";
     get_img_confirm.className = "img_confirm_border";
 });
-get_img_confirm.addEventListener("click", function (){
-    alert("확인 버튼 클릭");
+get_img_confirm.addEventListener("click", function ()
+{
+    // alert("확인 버튼 클릭");
+    
+    socket.emit("kg_change_req", kg_change.value)
+
+    // location.href = 'http://192.168.0.47:3300/page_chart';
 });
+
+let kg_change = document.getElementById('inform_input');
+
+
+kg_change.addEventListener('keyup', function(e)
+{
+    console.log(e)
+    
+
+    let newvalue = kg_change.value.replace(/[^0-9]/g, ''); // 숫자 아닌 것 삭제
+
+    kg_change.value = newvalue;
+    if(e.key == 'Enter')
+    {
+        socket.emit('kg_change_req', kg_change.value)
+    }
+})
+socket.on('wei_is_number', function(data)
+{
+    kg_change.value = "";
+})
+socket.on('kg_change_res', function(data)
+{
+    location.href = 'http://192.168.0.47:3300/page_chart';
+})
+
+
+
+
+
+
+
+
+
+
 
 const img_group = document.querySelectorAll('#img_group .frame_class .img_class');
 const text_group = document.querySelectorAll('#img_group .frame_class .text_class');
